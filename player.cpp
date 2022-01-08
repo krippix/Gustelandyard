@@ -1,33 +1,53 @@
 #include "player.hpp"
-
-std::string name;
-
-player::player(int currentNumber){
+//
+//-----constructor-----
+//
+Player::Player(){
     //String name
-    player::create(currentNumber);
+    create();
 };
 
-
-void player::create(int currentNumber){
+//
+//-----functions-----
+//
+void Player::create(){
     //Creates Player int of curren no.
     std::string name_tmp;
 
-    std::cout << "Namen des " << currentNumber + 1 << ". Spielers: ";
+    std::cout << "Name des Spielers: ";
     std::cin >> name_tmp;
-    player::setName(name_tmp);
+    setName(name_tmp);
+}
+
+void Player::addTickets(std::vector<int> newTickets){
+    
 }
 
 //
 //-----Getter-----
 //
+int Player::getPosition(){
+    return Player::m_position;
+}
 
+std::string Player::getName(){
+    return Player::m_name;
+}
 
-
-
+std::vector<int> Player::getTickets(){
+    return Player::m_tickets;
+}
 //
 //-----Setter-----
 //
-void player::setName(std::string name_tmp){
+void Player::setName(std::string newname){
     //Sets name in player object
-    player::name = name_tmp;
+    Player::m_name = newname;
+}
+
+void Player::setMrX(){
+    //makes Player Mr. X
+    Player::m_isMrX = true;
+    std::vector<int> xTickets {39,42,46,5,2}; //adds Tickets for Mr.X
+    addTickets(xTickets);
 }

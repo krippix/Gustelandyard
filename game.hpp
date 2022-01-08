@@ -4,20 +4,24 @@
 
 #include "player.hpp"
 
-class game{
+class Game{
     private:
         //Zahl der Spieler
-        std::vector<player> players;
-        bool gameover;
-        int playercount;
+        std::vector<Player> players;
+        bool m_gameover = false;
+        int chooseMrX();
     public:
-        
         //constructor
-        game();
-        //Spielerobjekte
-        
+        Game();
 
+        //functions
+        void addPlayer();
+
+        //getter
         bool getGameover();
-        void addPlayer(int);
+        Player getPlayer(int);
+
+        //setter
+        
         
 };

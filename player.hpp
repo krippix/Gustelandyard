@@ -3,27 +3,35 @@
 #include <vector>
 #include <string>
 
-class player{
+class Player{
     private:
-        int position;
-        std::string name;
-        bool istMrX;
-        std::vector<std::vector<int>> tickets;
+        int m_position;
+        bool m_isMrX;
+        std::string m_name;
+        std::vector<int> m_tickets {11,8,4,0,0}; //taxi,bus,bahn,black,doubleturn
         //0 - taxi, 1 -> bus, 2 -> train, 3 -> black, 4 -> double 
 
     public:
         //constructor
-        player(int);
-        void create(int);
-
-        int getPosition();
-        std::vector<std::vector<int>> getTickets();
+        Player();
         
+        //functions
+        void create();
+        bool useTicket();
+        void addTickets(std::vector<int>);
+        
+        //getter
+        int getPosition();
+        std::string getName();
+        std::vector<int> getTickets();
+        
+        //setter
         void setPosition(int);
         void setName(std::string);
+        void setMrX();
         
+       
         
-        bool useTicket();
 
 
 };
