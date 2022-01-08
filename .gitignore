@@ -3,9 +3,9 @@
 
 # C extensions
 *.so
-./vscode
 
 # Distribution / packaging
+vscode/
 .Python
 build/
 develop-eggs/
