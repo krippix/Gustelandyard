@@ -5,7 +5,12 @@
 #include <tuple>
 #include <algorithm>
 
+#include "player.hpp"
+#include "game.hpp"
+
 int main(){
+
+    bool gameover = false;
 
     std::vector<std::string> lk_sigmaringen {
         //Liste aller Gemeinden
@@ -97,8 +102,17 @@ int main(){
         //Wald
     };
 
+    //Creates Game Object
+    game currentSession;
 
-    std::cout << graph_lk_sigmaringen[1] << std::endl;
+
+    do{
+
+        
+    }while(!currentSession.getGameover());
+
+
+    //std::cout << graph_lk_sigmaringen[1] << std::endl;
 
     //std::cout << graph_lk_sigmaringen[0][0] << std::endl;
 
