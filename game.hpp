@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "player.hpp"
+#include "map.hpp"
 
 class Game{
     private:
@@ -10,6 +11,8 @@ class Game{
         std::vector<Player> players;
         bool m_gameover = false;
         int chooseMrX();
+        Map currentMap;
+
     public:
         //constructor
         Game();
@@ -20,6 +23,7 @@ class Game{
         //getter
         bool getGameover();
         Player getPlayer(int);
+        
 
         //setter
         

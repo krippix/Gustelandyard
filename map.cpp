@@ -44,6 +44,9 @@ std::vector<std::vector<std::vector<int>>> Map::convertEdgesToVector(json& sourc
 //
 //-----Getter-----
 //
+std::vector<int> Map::getStartingPositions(){
+    return Map::m_edges[0][0];
+}
 
 //
 //-----setter-----

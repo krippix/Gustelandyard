@@ -12,7 +12,13 @@ Game::Game(){
     for(int i=0; i < playercount; i++){
         Game::addPlayer();
     }
-    std::cout << players[chooseMrX()].getName() << " ist Mr.X." << std::endl;
+    std::cout << players[chooseMrX()].getName() << " ist Mr.X." << std::endl; //Choosing who will be Mr.X
+
+    //Determine starting Position
+    std::vector<int> startingPositions = Game::currentMap.getStartingPositions();
+
+    //TODO: Pick starting Position for each player, without assigning them twice
+    for
 
 }
 //
