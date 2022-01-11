@@ -17,8 +17,31 @@ Game::Game(){
     //Determine starting Position
     std::vector<int> startingPositions = Game::currentMap.getStartingPositions();
 
-    //TODO: Pick starting Position for each player, without assigning them twice
-    for
+    //Assign the starting Positions to the players
+    for (int i = 0; i < players.size(); i++){
+        
+        //Choose Random index and apply to player
+        int chosenIndex = rand() % ((startingPositions.size() -1) - i);
+        players[i].setPosition(startingPositions[chosenIndex]);
+
+
+        //Swap chosen index with last index (so it cant be chosen anymore because the sample size dereases by i)
+        std::swap(startingPositions[chosenIndex], startingPositions[startingPositions.size() -1 -i]);
+
+        //Testing stuff
+        /*
+        std::cout << "ChosenIndex: " << chosenIndex << "blubberbernd: " << startingPositions.size() -1 -i << std::endl;
+        
+        std::cout << "VEKTOR" << std::endl;
+        for (int j = 0; j < startingPositions.size(); j++){
+            std::cout << "[" << j << "] :"<< startingPositions[j] << std::endl;
+        }
+        */
+    }
+    for (int j=0; j < players.size(); j++){
+           std::cout << players[j].getName() << ": " << players[j].getPosition() << std::endl;
+    }
+
 
 }
 //

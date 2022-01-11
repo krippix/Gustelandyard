@@ -5,7 +5,7 @@
 
 class Player{
     private:
-        int m_position;
+        unsigned int m_position;
         bool m_isMrX;
         std::string m_name;
         std::vector<int> m_tickets {11,8,4,0,0}; //taxi,bus,bahn,black,doubleturn
@@ -26,10 +26,9 @@ class Player{
         std::vector<int> getTickets();
         
         //setter
-        void setPosition(int);
         void setName(std::string);
         void setMrX();
-        
+        void setPosition(int);
        
         
 

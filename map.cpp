@@ -11,6 +11,7 @@ void Map::parseMapData(){
     std::ifstream mapdata;
     mapdata.open("data/maps/Sigmaringen/locations.json");
     
+
     json j = json::parse(mapdata);
     
     //Adds locations to vector from json file
@@ -18,8 +19,9 @@ void Map::parseMapData(){
         m_locations.push_back(j["locations"][i]);
     }
 
-
-    m_edges = convertEdgesToVector(j["edges"]);
+      
+    
+    m_edges = convertEdgesToVector(j);
 
     //Auswahl aus den Im Ordner verfügbaren Maps erstellen
     //Bis dahin ist das hier eine Konstante.
@@ -28,15 +30,13 @@ void Map::parseMapData(){
 
 std::vector<std::vector<std::vector<int>>> Map::convertEdgesToVector(json& source){
     std::vector<std::vector<std::vector<int>>> result_vector;
-    for (int i = 0; i < source.size();i++){
-        result_vector.push_back(source[i]);
         
-        for (int j = 0; j < source[i].size(); j++){
-            result_vector.push_back(source[i][j]);
-
-            for (int k = 0; k < source[i][j].size(); k++){
-                result_vector.push_back(source[i][j][k]);
-            }
+    
+    for (int i = 0; i < source["edges"].size();i++){
+        result_vector.push_back(source["edges"][i]);
+        
+        for (int j = 0; j < source["edges"][i].size(); j++){
+            result_vector[i].push_back(source["edges"][i][j]);
         } 
     }
     return result_vector;
