@@ -4,6 +4,7 @@
 # C extensions
 *.so
 
+anleitung.pdf
 # Distribution / packaging
 .vscode/
 .Python

@@ -7,11 +7,15 @@
 
 class Game{
     private:
-        //Zahl der Spieler
-        std::vector<Player> players;
+        //variables
+        std::vector<Player> m_players; //Vector with player objects
+        Map m_currentMap;
+        int m_currentTurn = 0;
         bool m_gameover = false;
-        int chooseMrX();
-        Map currentMap;
+        
+        //fuctions
+        void chooseMrX();
+        
 
     public:
         //constructor
@@ -19,13 +23,15 @@ class Game{
 
         //functions
         void addPlayer();
+        void assignStartPositions();
+        void nextTurn();
+        void movePlayer(Player,int);
 
         //getter
         bool getGameover();
         Player getPlayer(int);
-        
 
         //setter
-        
+        void setPlayerCount();
         
 };

@@ -26,6 +26,7 @@ class Map{
 
         //getter
         std::vector<int> getStartingPositions();
+        std::vector<std::vector<int>> getEdges(int);
         
         //setter
         
