@@ -29,7 +29,7 @@ void Game::chooseMrX(){
     int answer_no;
 
     //Determin if Mr.X should be random
-    std::cout << "Soll Mr.X durch Zufall bestimmt werden? [y/n] ";
+    std::cout << "Do you want to determine Mr. X randomly? [y/n] ";
     std::cin >> answer_tmp;
     if (answer_tmp == 'y'){
         answer_no = (rand() % m_players.size());
@@ -37,13 +37,13 @@ void Game::chooseMrX(){
         for (int i=0; i < m_players.size(); i++){
         std::cout << "[" << i << "] " << m_players[i].getName() << std::endl;
         }
-        std::cout << "Wer soll Mr.X sein? Bitte gib die Nummer des Spielers an: ";
+        std::cout << "Enter the number of Mr. X: ";
         std::cin >> answer_no;
     }
 
     //Now Mr.X is actually set..
     m_players[answer_no].setMrX();
-    std::cout << m_players[answer_no].getName() << " ist Mr.X." << std::endl; //Choosing who will be Mr.X
+    std::cout << m_players[answer_no].getName() << " is Mr.X." << std::endl; //Choosing who will be Mr.X
 
     //Make Mr.X Player no. 0
     std::swap(m_players[m_players.size()-1], m_players[0]);
@@ -73,14 +73,60 @@ void Game::assignStartPositions(){
         }
         */
     }
-    std::cout << "The players will start at the following positions: " << std::endl;
+    std::cout << std::endl << "The players will start at the following positions: " << std::endl;
     for (int j=0; j < m_players.size(); j++){
-           std::cout << m_players[j].getName() << ": " << m_players[j].getPosition() << std::endl;
+           std::cout << m_players[j].getName() << ": " << m_currentMap.getLocationName(m_players[j].getPosition()) << std::endl;
     }
 }
 
-void movePlayer(Player currentPlayer, int newPosition){
+void Game::movePlayer(Player currentPlayer){
+    int newPosition;
+    std::vector<std::vector<int>> availableEdges; //[type][edge]
+    std::cout << "Available Moves: " << std::endl;
+    
+    //Get edges of the current position
+    availableEdges = m_currentMap.getAvailableEdges(currentPlayer.getPosition());
 
+    //Mark edges where players already are, into vector occupied
+    std::vector<int> occupied;
+    for (int j = 1; j < m_players.size(); j++) {
+
+        occupied.push_back(m_players[j].getPosition());//1,2,...,n
+    }
+
+    //Check each vehicle type 0->taxi 1->bus 2->train 3->boat
+    //And if any of the found edges are occupied by players
+    for (int k = 0; k < availableEdges.size(); k++) {
+
+        //check each edge for current vehicle type
+        for (int l = 0; l < availableEdges[k].size(); l++) {
+            std::cout << l << ". " << "[" << m_currentMap.getLocationName(availableEdges[k][l]) << "]";
+
+            switch (k) {
+            case 0:
+                std::cout << "[Taxi]";
+                break;
+            case 1:
+                std::cout << "[Bus]";
+                break;
+            case 2:
+                std::cout << "[Train]";
+                break;
+            case 3:
+                std::cout << "[Boat]";
+                break;
+            }
+            //check if player is next to any of those edges
+            for (int m = 0; m < occupied.size(); m++) {
+                if (availableEdges[k][l] == occupied[m]) { //Yes really, i want to use i
+                    std::cout << "[" << m_players[m].getName() << "]";
+                }
+            }
+            std::cout << std::endl;
+        }
+    }
+
+    std::cout << "Enter your new Position: " << std::endl;
 }
 
 //
@@ -99,7 +145,7 @@ Player Game::getPlayer(int i){
 //-----Setter-----
 //
 void Game::setPlayerCount(){
-    std::cout << "Anzahl der Spieler (2-6): ";
+    std::cout << "Enter playercount (2-6): ";
     //2 to 6 players
     int playercount;
     std::cin >> playercount;
@@ -116,54 +162,14 @@ void Game::nextTurn(){
         std::cout << "Turn 23 reached. "<< m_players[0].getName() <<" won!" << std::endl;
         return;
     }
+    std::cout << std::endl << "Current turn: " << m_currentTurn << std::endl;
 
-    //Moving each player after each other. (Mr.X first as he is always no. 0)
-    std::vector<std::vector<int>> availableEdges; //[type][edge]
+    //Going through each players turn after another
+    //Maybe somehow make it possible for players to take turns at the same time
     for (int i=0; i < m_players.size(); i++){
-        int newPosition;
-        
-        std::cout << "Available Moves for " << m_players[i].getName() << std::endl;
-        //Get edges from current position
-        availableEdges = m_currentMap.getEdges(m_players[i].getPosition());
-        
-        //Mark edges where players already are, into vector occupied
-        std::vector<int> occupied;
-        for (int j=1; j < m_players.size(); j++){
-            
-            occupied.push_back(m_players[j].getPosition());//1,2,...,n
-        }
-        
-        //Check each vehicle type 0->taxi 1->bus 2->train 3->boat
-        for (int k=0; k < availableEdges.size(); k++){
-
-            //check each edge for current vehicle type
-            for ( int l=0; l < availableEdges[k].size(); l++){
-                std::cout << "[" << availableEdges[k][l] << "]";
-
-                
-                switch (k){
-                    case 0:
-                        std::cout << "[Taxi]";
-                        break;
-                    case 1:
-                        std::cout << "[Bus]";
-                        break;
-                    case 2:
-                        std::cout << "[Train]";
-                        break;
-                    case 3:
-                        std::cout << "[Boat]";
-                        break;
-                }
-                //check if player is next to any of those edges
-                for (int m=0; m < occupied.size(); m++){
-                    if(availableEdges[k][l] == occupied[m]){ //Yes really, i want to use i
-                        std::cout << "[" << m_players[m].getName() << "]";
-                    }
-                }
-                std::cout << std::endl;
-            }
-        }
+        std::cout << std::endl << "Player to move: " << m_players[i].getName() << std::endl;
+        m_players[i].printTickets();
+        movePlayer(m_players[i]);
     }
 
 
@@ -180,5 +186,5 @@ void Game::nextTurn(){
         }
         */
 
-    std::cout << "Current turn: " << m_currentTurn << std::endl;
+    
 }

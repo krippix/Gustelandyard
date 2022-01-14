@@ -44,7 +44,7 @@ std::vector<int> Map::getStartingPositions(){
     return Map::m_edges[0][0];
 }
 
-std::vector<std::vector<int>> Map::getEdges(int currentPosition){
+std::vector<std::vector<int>> Map::getAvailableEdges(int currentPosition){
     //Search map for Edges with current Position
     std::vector<std::vector<int>> result_edges {{},{},{},{}};
 
@@ -69,6 +69,11 @@ std::vector<std::vector<int>> Map::getEdges(int currentPosition){
     }
 
     return result_edges;
+}
+
+std::string Map::getLocationName(int index) {
+    //Returns name of location as string
+    return m_locations[index];
 }
 
 //

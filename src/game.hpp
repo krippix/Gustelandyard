@@ -25,7 +25,7 @@ class Game{
         void addPlayer();
         void assignStartPositions();
         void nextTurn();
-        void movePlayer(Player,int);
+        void movePlayer(Player);
 
         //getter
         bool getGameover();

@@ -26,7 +26,8 @@ class Map{
 
         //getter
         std::vector<int> getStartingPositions();
-        std::vector<std::vector<int>> getEdges(int);
+        std::vector<std::vector<int>> getAvailableEdges(int);
+        std::string getLocationName(int);
         
         //setter
         

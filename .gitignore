@@ -4,9 +4,13 @@
 # C extensions
 *.so
 
+# IDE / Editor Stuff
+.vscode/
+.vs/
+out/
+
 anleitung.pdf
 # Distribution / packaging
-.vscode/
 .Python
 build/
 develop-eggs/
