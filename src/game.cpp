@@ -82,7 +82,7 @@ void Game::assignStartPositions(){
 void Game::movePlayer(Player currentPlayer){
     int newPosition;
     std::vector<std::vector<int>> availableEdges; //[type][edge]
-    std::cout << "Available Moves: " << std::endl;
+    std::cout << "Adjecent Locations: " << std::endl;
     
     //Get edges of the current position
     availableEdges = m_currentMap.getAvailableEdges(currentPlayer.getPosition());
@@ -118,7 +118,7 @@ void Game::movePlayer(Player currentPlayer){
             }
             //check if player is next to any of those edges
             for (int m = 0; m < occupied.size(); m++) {
-                if (availableEdges[k][l] == occupied[m]) { //Yes really, i want to use i
+                if (availableEdges[k][l] == occupied[m]) { 
                     std::cout << "[" << m_players[m].getName() << "]";
                 }
             }
@@ -126,7 +126,27 @@ void Game::movePlayer(Player currentPlayer){
         }
     }
 
-    std::cout << "Enter your new Position: " << std::endl;
+    std::cout << "Enter your new Position: ";
+    int newPosition;
+    bool moveIsValid;
+    do {
+        moveIsValid = true;
+        std::cin >> newPosition;
+
+        //Check if chosen Position is occupied
+        for (int i = 0; i < occupied.size(); i++) {
+            if (newPosition == occupied[i]) {
+                std::cout << "Occupied! Choose another location: ";
+                moveIsValid = false;
+            }
+        }
+
+        //Check if ticket is available
+        
+
+    } while (!moveIsValid);
+
+    //TODO Prüfen ob spieler sich bewegen darf und die Auswahl ermöglichen
 }
 
 //

@@ -21,10 +21,10 @@ class Player{
         void addTickets(std::vector<int>);
         
         //getter
-        int getPosition();
-        std::string getName();
-        std::vector<int> getTickets();
-        void printTickets();
+        int getPosition() const;
+        std::string getName() const;
+        std::vector<int> getTickets() const;
+        void printTickets() const;
         
         //setter
         void setName(std::string);

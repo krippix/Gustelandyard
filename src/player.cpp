@@ -28,19 +28,19 @@ void Player::addTickets(std::vector<int> newTickets) { //Adds tickets duh
 //
 //-----Getter-----
 //
-int Player::getPosition(){
+int Player::getPosition() const {
     return Player::m_position;
 }
 
-std::string Player::getName(){
+std::string Player::getName() const {
     return Player::m_name;
 }
 
-std::vector<int> Player::getTickets(){
+std::vector<int> Player::getTickets() const {
     return Player::m_tickets;
 }
 
-void Player::printTickets() {
+void Player::printTickets() const {
     std::cout << "Tickets: " << std::endl;
 
     if (m_isMrX) {

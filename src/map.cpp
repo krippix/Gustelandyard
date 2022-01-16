@@ -7,24 +7,28 @@ Map::Map(){
 //-----functions-----
 //
 void Map::parseMapData(){
-    
     std::ifstream mapdata;
-    mapdata.open("data/maps/Sigmaringen/locations.json");
+    mapdata.open("data/maps/"+m_name+"/locations.json");
     
+    json locationsJ = json::parse(mapdata);
 
-    json j = json::parse(mapdata);
-    
-    //Adds locations to vector from json file
-    for (int i = 0; i < j["locations"].size();i++){
-        m_locations.push_back(j["locations"][i]);
+    //Creates Location Objects and appends Name and ID, NO EDGES ARE HERE YET!
+    for (int i = 0; i < locationsJ["locations"].size(); i++) {
+        
+        Location currentLocation(i, locationsJ["locations"][i]);
+        m_locations.push_back(currentLocation);
     }
 
-      
+    //Add starting Positions
+    for (int i = 0; i < locationsJ["edges"]["startingPositions"][i]; i++) {
+        //Mark starting Positions in location objects
+        m_locations[i].setStartingPosition();
+    }
     
-    m_edges = convertEdgesToVector(j);
+    //Now adds edges between the connections
+    for (int i=0; i < locationsJ["edges"])
 
-    //Auswahl aus den Im Ordner verfügbaren Maps erstellen
-    //Bis dahin ist das hier eine Konstante.
+        --> CONTINUE HERE!!//Try to interpret enum ConnectionType as String to pull it from the json file
     
 }
 
@@ -40,10 +44,14 @@ std::vector<std::vector<std::vector<int>>> Map::convertEdgesToVector(json& sourc
 //
 //-----Getter-----
 //
+
+/* Im Locations Objekt implementieren
 std::vector<int> Map::getStartingPositions(){
     return Map::m_edges[0][0];
 }
+*/
 
+/* Im locations objekt implementieren
 std::vector<std::vector<int>> Map::getAvailableEdges(int currentPosition){
     //Search map for Edges with current Position
     std::vector<std::vector<int>> result_edges {{},{},{},{}};
@@ -70,10 +78,19 @@ std::vector<std::vector<int>> Map::getAvailableEdges(int currentPosition){
 
     return result_edges;
 }
+*/
 
 std::string Map::getLocationName(int index) {
     //Returns name of location as string
     return m_locations[index];
+}
+
+std::vector<std::vector<int>> Map::getLegalMoves(std::vector<Player> players, Player currentPlayer) {
+    //Takes Players and current Player as input and returns Vector of allowed Moves of the map
+
+    std::vector<std::vector<int>> availableEdges = getAvailableEdges(currentPlayer.getPosition());
+
+    //Remove occupied 
 }
 
 //

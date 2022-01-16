@@ -4,7 +4,7 @@ add_executable(gustelandyard
     map.cpp
     player.cpp
     game.cpp
-)
+ "location.hpp" "location.cpp")
 
 # Tell gustelandyard where to find additional include files
 target_include_directories(gustelandyard PRIVATE
