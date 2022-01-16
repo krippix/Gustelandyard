@@ -20,78 +20,75 @@ void Map::parseMapData(){
     }
 
     //Add starting Positions
-    for (int i = 0; i < locationsJ["edges"]["startingPositions"][i]; i++) {
+    for (int i = 0; i < locationsJ["startingPositions"].size(); i++) {
         //Mark starting Positions in location objects
-        m_locations[i].setStartingPosition();
+        m_locations[locationsJ["startingPositions"][i]].setStartingPosition();
+        std::cout << "i: " << m_locations[locationsJ["startingPositions"][i]].isStartingPosition() << std::endl;
     }
     
-    //Now adds edges between the connections
-    for (int i=0; i < locationsJ["edges"])
+    //Now adds edges between the connections, iterates through Connection Types
+    for (int i = 0; i < locationsJ["edges"].size(); i++) {
+        
+        //Appends Pointer to connected Location to location
+        for (int j = 0; j < locationsJ["edges"][i].size(); j++) {
 
-        --> CONTINUE HERE!!//Try to interpret enum ConnectionType as String to pull it from the json file
-    
-}
+            ConnectionType type; //Enum with vehicle type
+            
+            //Picks type to append
+            switch (i) {
+                case 0: type = ConnectionType::taxi;
+                    break;
+                case 1: type = ConnectionType::bus;
+                    break;
+                case 2: type = ConnectionType::train;
+                    break;
+                case 3: type = ConnectionType::boat;
+                    break;
+            }
 
-std::vector<std::vector<std::vector<int>>> Map::convertEdgesToVector(json& source){
-    std::vector<std::vector<std::vector<int>>> result_vector;
+            //Adds content of right side to left id side of the vector to 
+            m_locations[locationsJ["edges"][i][j][0]].addNeighbour(type, &m_locations[locationsJ["edges"][i][j][1]]);
+
+            std::cout << "Edges: [" << locationsJ["edges"][i][j][0] << "," << locationsJ["edges"][i][j][1] << std::endl;
+            
+            //Now the same thing but sides are revesed
+            m_locations[locationsJ["edges"][i][j][1]].addNeighbour(type, &m_locations[locationsJ["edges"][i][j][0]]);
+        }
+    }
+
         
     
-    for (int i = 0; i < source["edges"].size(); i++){
-        result_vector.push_back(source["edges"][i]);
-    }
-    return result_vector;
 }
+
 //
 //-----Getter-----
 //
 
-/* Im Locations Objekt implementieren
-std::vector<int> Map::getStartingPositions(){
-    return Map::m_edges[0][0];
-}
-*/
 
-/* Im locations objekt implementieren
-std::vector<std::vector<int>> Map::getAvailableEdges(int currentPosition){
-    //Search map for Edges with current Position
-    std::vector<std::vector<int>> result_edges {{},{},{},{}};
+std::vector<Location*> Map::getStartingLocations() {
+    //Returns vector of pointers to possible starting locations
+    std::vector<Location*> startingPositions;
 
-    //returns ve
-
-    //iterates through all edges
-    for (int i=1; i < m_edges.size(); i++){ //starting at 1 because 0 contains the starting positions
-
-        for (int j=0; j < m_edges[i].size(); j++){
-            
-            //[edge no.]
-            //std::cout << "Pos. " << currentPosition <<  "[" << m_edges[i][j][0] << "," << m_edges[i][j][1] << "]" <<std::endl;
-            
-            //left edge
-            if (m_edges[i][j][0] == currentPosition){
-                result_edges[i-1].push_back(m_edges[i][j][1]);
-            }
-            if (m_edges[i][j][1] == currentPosition){
-                result_edges[i-1].push_back(m_edges[i][j][0]);
-            }            
+    for (int i = 0; i < m_locations.size(); i++) {
+        if (m_locations[i].isStartingPosition()) {
+            startingPositions.push_back(&m_locations[i]);
         }
     }
-
-    return result_edges;
-}
-*/
-
-std::string Map::getLocationName(int index) {
-    //Returns name of location as string
-    return m_locations[index];
+    return startingPositions;
 }
 
-std::vector<std::vector<int>> Map::getLegalMoves(std::vector<Player> players, Player currentPlayer) {
-    //Takes Players and current Player as input and returns Vector of allowed Moves of the map
-
-    std::vector<std::vector<int>> availableEdges = getAvailableEdges(currentPlayer.getPosition());
+/* I think this should be implemented in GAME.cpp
+std::vector<std::vector<Location*>> Map::getMoves(Player* currentPlayer) const {
+    //Input Player pointer, returns vector of locations [0]-> occupied, [1]-> possible
+    std::vector<std::vector<Location*>> moves;
+    
+    currentPlayer->getPosition()->getOccupiedLocations();
 
     //Remove occupied 
+
+    return moves;
 }
+*/
 
 //
 //-----setter-----

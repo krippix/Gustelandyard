@@ -52,99 +52,26 @@ void Game::chooseMrX(){
 void Game::assignStartPositions(){
     
     //Determine starting Position
-    std::vector<int> startingPositions = Game::m_currentMap.getStartingPositions();
+
+    //TODO: Fix rand() implementation, for some reason only 19 and 20 seem to get picket at the moment!
+    std::vector<Location*> startingLocations = Game::m_currentMap.getStartingLocations();
     for (int i = 0; i < m_players.size(); i++){
 
         //Choose Random index and apply to player
-        int chosenIndex = rand() % ((startingPositions.size() -1) - i);
-        m_players[i].setPosition(startingPositions[chosenIndex]);
+        int chosenIndex = rand() % (startingLocations.size()-i); //Number of starting Positions minus current iteration (+1 because 
+        m_players[i].setLocation(startingLocations[chosenIndex]);
 
 
         //Swap chosen index with last index (so it cant be chosen anymore because the sample size dereases by i)
-        std::swap(startingPositions[chosenIndex], startingPositions[startingPositions.size() -1 -i]);
-
-        //Testing stuff
-        /*
-        std::cout << "ChosenIndex: " << chosenIndex << "blubberbernd: " << startingPositions.size() -1 -i << std::endl;
-        
-        std::cout << "VEKTOR" << std::endl;
-        for (int j = 0; j < startingPositions.size(); j++){
-            std::cout << "[" << j << "] :"<< startingPositions[j] << std::endl;
-        }
-        */
-    }
-    std::cout << std::endl << "The players will start at the following positions: " << std::endl;
-    for (int j=0; j < m_players.size(); j++){
-           std::cout << m_players[j].getName() << ": " << m_currentMap.getLocationName(m_players[j].getPosition()) << std::endl;
+        std::swap(startingLocations[chosenIndex], startingLocations[startingLocations.size() -1 -i]);
     }
 }
 
-void Game::movePlayer(Player currentPlayer){
-    int newPosition;
-    std::vector<std::vector<int>> availableEdges; //[type][edge]
-    std::cout << "Adjecent Locations: " << std::endl;
+void Game::movePlayer(Player* currentPlayer){
+    //Display Possible moves
+
+
     
-    //Get edges of the current position
-    availableEdges = m_currentMap.getAvailableEdges(currentPlayer.getPosition());
-
-    //Mark edges where players already are, into vector occupied
-    std::vector<int> occupied;
-    for (int j = 1; j < m_players.size(); j++) {
-
-        occupied.push_back(m_players[j].getPosition());//1,2,...,n
-    }
-
-    //Check each vehicle type 0->taxi 1->bus 2->train 3->boat
-    //And if any of the found edges are occupied by players
-    for (int k = 0; k < availableEdges.size(); k++) {
-
-        //check each edge for current vehicle type
-        for (int l = 0; l < availableEdges[k].size(); l++) {
-            std::cout << l << ". " << "[" << m_currentMap.getLocationName(availableEdges[k][l]) << "]";
-
-            switch (k) {
-            case 0:
-                std::cout << "[Taxi]";
-                break;
-            case 1:
-                std::cout << "[Bus]";
-                break;
-            case 2:
-                std::cout << "[Train]";
-                break;
-            case 3:
-                std::cout << "[Boat]";
-                break;
-            }
-            //check if player is next to any of those edges
-            for (int m = 0; m < occupied.size(); m++) {
-                if (availableEdges[k][l] == occupied[m]) { 
-                    std::cout << "[" << m_players[m].getName() << "]";
-                }
-            }
-            std::cout << std::endl;
-        }
-    }
-
-    std::cout << "Enter your new Position: ";
-    int newPosition;
-    bool moveIsValid;
-    do {
-        moveIsValid = true;
-        std::cin >> newPosition;
-
-        //Check if chosen Position is occupied
-        for (int i = 0; i < occupied.size(); i++) {
-            if (newPosition == occupied[i]) {
-                std::cout << "Occupied! Choose another location: ";
-                moveIsValid = false;
-            }
-        }
-
-        //Check if ticket is available
-        
-
-    } while (!moveIsValid);
 
     //TODO Prüfen ob spieler sich bewegen darf und die Auswahl ermöglichen
 }
@@ -189,7 +116,7 @@ void Game::nextTurn(){
     for (int i=0; i < m_players.size(); i++){
         std::cout << std::endl << "Player to move: " << m_players[i].getName() << std::endl;
         m_players[i].printTickets();
-        movePlayer(m_players[i]);
+        //movePlayer(m_players[i]);
     }
 
 

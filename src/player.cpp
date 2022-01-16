@@ -28,8 +28,8 @@ void Player::addTickets(std::vector<int> newTickets) { //Adds tickets duh
 //
 //-----Getter-----
 //
-int Player::getPosition() const {
-    return Player::m_position;
+Location* Player::getLocation() const {
+    return m_currentLocation;
 }
 
 std::string Player::getName() const {
@@ -44,7 +44,7 @@ void Player::printTickets() const {
     std::cout << "Tickets: " << std::endl;
 
     if (m_isMrX) {
-        std::cout << "[taxi]: unlimited [bus]: unlimited [train]: unlimited " << " [black]: " << m_tickets[3] << " [2xTurn]: " << m_tickets[4];
+        std::cout << "[black]: " << m_tickets[3] << "[2xTurn] : " << m_tickets[4];
     }
     else {
         std::cout << "[taxi]: " << m_tickets[0] << " [bus]: " << m_tickets[1] << " [train]: " << m_tickets[2];
@@ -67,7 +67,7 @@ void Player::setMrX(){
     addTickets(xTickets);
 }
 
-void Player::setPosition(int newPosition){
-    //Saves new Position to player object. But the movement has to be confirmed in map!!
-    m_position = newPosition;
+void Player::setLocation(Location* newLocation){
+    //Pointer to new location set on player. Careful: Hast to be set on location itself aswell!
+    m_currentLocation = newLocation;
 }

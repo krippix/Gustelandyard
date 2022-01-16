@@ -23,7 +23,7 @@ class Game{
         void addPlayer();
         void assignStartPositions();
         void nextTurn();
-        void movePlayer(Player);
+        void movePlayer(Player* currentPlayer);
 
         //getter
         bool getGameover();

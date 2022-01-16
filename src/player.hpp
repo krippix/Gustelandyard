@@ -3,9 +3,12 @@
 #include <vector>
 #include <string>
 
+#include "location.hpp"
+class Location;
+
 class Player{
     private:
-        int m_position;
+        Location* m_currentLocation;
         bool m_isMrX = false;
         std::string m_name;
         std::vector<int> m_tickets {11,8,4,0,0}; //taxi,bus,bahn,black,doubleturn
@@ -21,7 +24,7 @@ class Player{
         void addTickets(std::vector<int>);
         
         //getter
-        int getPosition() const;
+        Location* getLocation() const;
         std::string getName() const;
         std::vector<int> getTickets() const;
         void printTickets() const;
@@ -29,7 +32,7 @@ class Player{
         //setter
         void setName(std::string);
         void setMrX();
-        void setPosition(int);
+        void setLocation(Location* newLocation);
        
         
 
