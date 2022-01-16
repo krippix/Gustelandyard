@@ -23,7 +23,6 @@ void Map::parseMapData(){
     for (int i = 0; i < locationsJ["startingPositions"].size(); i++) {
         //Mark starting Positions in location objects
         m_locations[locationsJ["startingPositions"][i]].setStartingPosition();
-        std::cout << "i: " << m_locations[locationsJ["startingPositions"][i]].isStartingPosition() << std::endl;
     }
     
     //Now adds edges between the connections, iterates through Connection Types
@@ -49,7 +48,6 @@ void Map::parseMapData(){
             //Adds content of right side to left id side of the vector to 
             m_locations[locationsJ["edges"][i][j][0]].addNeighbour(type, &m_locations[locationsJ["edges"][i][j][1]]);
 
-            std::cout << "Edges: [" << locationsJ["edges"][i][j][0] << "," << locationsJ["edges"][i][j][1] << std::endl;
             
             //Now the same thing but sides are revesed
             m_locations[locationsJ["edges"][i][j][1]].addNeighbour(type, &m_locations[locationsJ["edges"][i][j][0]]);
