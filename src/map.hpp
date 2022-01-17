@@ -24,7 +24,6 @@ class Map{
 
         //getter
         std::vector<Location*> getStartingLocations();
-        std::vector<std::vector<Location*>> getMoves(Player* currentPlayer) const;
         
         //setter
         

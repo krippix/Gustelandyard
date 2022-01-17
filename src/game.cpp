@@ -68,12 +68,102 @@ void Game::assignStartPositions(){
 }
 
 void Game::movePlayer(Player* currentPlayer){
-    //Display Possible moves
-
-
+    //Player movement, and most of the gameplay. Returns false, once somebody won.
     
+    //"Input" Stuff
+    std::vector <Connection*> availableConnections = currentPlayer->getLocation()->getAvailableConnections();
+    std::vector <Connection*> unavailableConnections = currentPlayer->getLocation()->getOccupiedConnections();
+    //Result Vector
+    std::vector<Connection*> allowedMoves; //This vector will contain all possible connections
+    std::vector<Connection*> disallowedMoves; //duh
+    
+    //check if Mr.X has been trapped
+    if (availableConnections.size() == 0 && currentPlayer->isMrX()) {
+        std::cout << "Mr.X is trapped at " << currentPlayer->getLocation()->getName() << "the detectives have won!" << std::endl;
+        currentPlayer->setLocation(currentPlayer->getLocation());
+        m_gameover = true;
+        return;
+    }
 
-    //TODO Prüfen ob spieler sich bewegen darf und die Auswahl ermöglichen
+
+    //Append to allowedMoves where Player has enough tickets
+    //iterate through ticket types: 0->taxi, 1->bus, 2->train, 3->boat
+    for (int i = 0; i <= 3; i++) {
+        
+        //check each type for Ticket availability
+        if (currentPlayer->getTickets()[i] != 0) {
+            //push back all connections of the current type
+            for (int j = 0; j < availableConnections.size(); j++) {
+                if (availableConnections[j]->connectionType == i) {
+                    allowedMoves.push_back(availableConnections[j]);
+                }
+                                
+            }       
+        }
+        else {
+            //push back all connections of the current type
+            for (int j = 0; j < availableConnections.size(); j++) {
+                if (availableConnections[j]->connectionType == i) {
+                    disallowedMoves.push_back(availableConnections[j]);
+                }
+
+            }
+        }   
+    }
+    //Print out legal moves
+    std::vector<std::string> connectionTypeName{ "taxi","bus","train","boat" }; //sorry for that
+    for (int i = 0; i < allowedMoves.size(); i++) {
+        std::cout << i << ". ";
+        std::cout << "[" << connectionTypeName[i] << "]";
+        std::cout << "[" << allowedMoves[i]->location->getName() << "]" << std::endl;
+    }
+    
+    //Print out illegal moves
+    //First occupied places
+    for (int i = 0; i < unavailableConnections.size(); i++) {
+        std::cout << unavailableConnections.size()+i << ". ";
+        std::cout << "[" << connectionTypeName[i] << "]";
+        std::cout << "[" << unavailableConnections[i]->location->getName() << "][blocked]";
+        std::cout << "[" << unavailableConnections[i]->location->getCurrentPlayer()->getName() << "]" << std::endl;
+    }
+    
+    //Now those that are unreachable due to missing tickets
+    for (int i = 0; i < disallowedMoves.size(); i++) {
+        std::cout << disallowedMoves.size() + unavailableConnections.size() + i << ". ";
+        std::cout << "[" << connectionTypeName[i] << "]";
+        std::cout << "[" << disallowedMoves[i]->location->getName() << "][no tickets]" << std::endl;
+    }
+
+    //Player input
+    int selection;
+
+    //Check if player has been trapped
+    if (allowedMoves.size() == 0) {
+        std::cout << "No available Moves! You are stuck here!" << std::endl;
+        currentPlayer->setLocation(currentPlayer->getLocation()); //For History keeping
+        return;
+    }
+
+    std::cout << "Move to: ";
+    do {
+        std::cin >> selection;
+        if (selection < 0 || selection > allowedMoves.size()) {
+            std::cout << "Input out of range, try again:";
+        }
+    } while (selection < 0 || selection > allowedMoves.size());
+    
+    //Now that selection was made, the actual movement can happen
+    //But first we have to check if the player moved to Mr.X's location
+    if (allowedMoves[selection]->location->getCurrentPlayer()->isMrX()) {
+        currentPlayer->setLocation(allowedMoves[selection]->location);
+        std::cout << "You found " << m_players[0].getName() << "!" << std::endl;
+        std::cout << "The detectives have won the game!" << std::endl;
+        m_gameover = true;
+    }
+    
+    //Now everything should be fine? Please?
+    currentPlayer->setLocation(allowedMoves[selection]->location);
+    return;
 }
 
 //
@@ -104,19 +194,23 @@ void Game::setPlayerCount(){
 
 void Game::nextTurn(){
     m_currentTurn += 1;
+
+    std::cout << "#####################################" << std::endl;
+
     if (m_currentTurn > 23){
         m_gameover = true;
         std::cout << "Turn 23 reached. "<< m_players[0].getName() <<" won!" << std::endl;
         return;
     }
-    std::cout << std::endl << "Current turn: " << m_currentTurn << std::endl;
+    std::cout << "Turn " << m_currentTurn << " started!" << std::endl;
 
     //Going through each players turn after another
     //Maybe somehow make it possible for players to take turns at the same time
     for (int i=0; i < m_players.size(); i++){
         std::cout << std::endl << "Player to move: " << m_players[i].getName() << std::endl;
         m_players[i].printTickets();
-        //movePlayer(m_players[i]);
+        movePlayer(&m_players[i]);
+        std::cout << std::endl;
     }
 
 

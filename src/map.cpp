@@ -31,26 +31,12 @@ void Map::parseMapData(){
         //Appends Pointer to connected Location to location
         for (int j = 0; j < locationsJ["edges"][i].size(); j++) {
 
-            ConnectionType type; //Enum with vehicle type
-            
-            //Picks type to append
-            switch (i) {
-                case 0: type = ConnectionType::taxi;
-                    break;
-                case 1: type = ConnectionType::bus;
-                    break;
-                case 2: type = ConnectionType::train;
-                    break;
-                case 3: type = ConnectionType::boat;
-                    break;
-            }
-
             //Adds content of right side to left id side of the vector to 
-            m_locations[locationsJ["edges"][i][j][0]].addNeighbour(type, &m_locations[locationsJ["edges"][i][j][1]]);
+            m_locations[locationsJ["edges"][i][j][0]].addNeighbour(i, &m_locations[locationsJ["edges"][i][j][1]]);
 
             
             //Now the same thing but sides are revesed
-            m_locations[locationsJ["edges"][i][j][1]].addNeighbour(type, &m_locations[locationsJ["edges"][i][j][0]]);
+            m_locations[locationsJ["edges"][i][j][1]].addNeighbour(i, &m_locations[locationsJ["edges"][i][j][0]]);
         }
     }
 
@@ -74,19 +60,6 @@ std::vector<Location*> Map::getStartingLocations() {
     }
     return startingPositions;
 }
-
-/* I think this should be implemented in GAME.cpp
-std::vector<std::vector<Location*>> Map::getMoves(Player* currentPlayer) const {
-    //Input Player pointer, returns vector of locations [0]-> occupied, [1]-> possible
-    std::vector<std::vector<Location*>> moves;
-    
-    currentPlayer->getPosition()->getOccupiedLocations();
-
-    //Remove occupied 
-
-    return moves;
-}
-*/
 
 //
 //-----setter-----

@@ -36,7 +36,7 @@ std::string Player::getName() const {
     return Player::m_name;
 }
 
-std::vector<int> Player::getTickets() const {
+std::vector<int> Player::getTickets() {
     return Player::m_tickets;
 }
 
@@ -44,12 +44,22 @@ void Player::printTickets() const {
     std::cout << "Tickets: " << std::endl;
 
     if (m_isMrX) {
-        std::cout << "[black]: " << m_tickets[3] << "[2xTurn] : " << m_tickets[4];
+        std::cout << "[black]: " << m_tickets[3] << " [2xTurn]: " << m_tickets[4];
     }
     else {
         std::cout << "[taxi]: " << m_tickets[0] << " [bus]: " << m_tickets[1] << " [train]: " << m_tickets[2];
     }
     std::cout << std::endl;
+}
+
+bool Player::isMrX() {
+    if (this == nullptr) {
+        return false;
+    }
+    else {
+        return m_isMrX;
+    }
+    
 }
 
 //
@@ -69,5 +79,10 @@ void Player::setMrX(){
 
 void Player::setLocation(Location* newLocation){
     //Pointer to new location set on player. Careful: Hast to be set on location itself aswell!
+    
+    //Keeping track of history, maybe it will be useful for visualization at some point
+    if (!(m_currentLocation == nullptr))
+        m_locationHistory.push_back(m_currentLocation);
+    
     m_currentLocation = newLocation;
 }

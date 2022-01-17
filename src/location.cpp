@@ -10,7 +10,7 @@ Location::Location(int id, std::string name) {
 //
 //-----functions-----
 //
-void Location::addNeighbour(ConnectionType type, Location* location) {
+void Location::addNeighbour(int type, Location* location) {
     m_neighbours.push_back({ type,location });
 }
 
@@ -33,36 +33,46 @@ bool Location::isOccupied() const {
     
 }
 
-std::vector<Connection> Location::getNeighbours() const {
+/*
+std::vector<Connection>* Location::getAllConnections(){
     //Returns Vector of neighbouring vertices
-    return m_neighbours;
+    return &m_neighbours;
 }
+*/
 
-std::vector<Location*> Location::getAvailableLocations() const {
-    //Returns Vector with Tuples containing location and a bool, true->free, false->occupied
-    //this function will ONLY check if the node can be used. Tickets will probably have to be checked in the player object
-    std::vector<Location*> availableLocations;
+std::vector<Connection*> Location::getAvailableConnections() {
+    //returns vector with Connections
+    std::vector<Connection*> availableConnections;
 
-    //Adds moves as tuples to result vector
+    //Returns Pointer to the connection
     for (int i = 0; i < m_neighbours.size(); i++) {
-        if (m_neighbours[i].location->isOccupied()) {
-            availableLocations.push_back(m_neighbours[i].location);
+        if (!m_neighbours[i].location->isOccupied()) {
+            availableConnections.push_back(&m_neighbours[i]);
         }
     }
-    return availableLocations;
+    return availableConnections;
 }
 
-std::vector<Location*> Location::getOccupiedLocations() const {
-    //Invalid Version of valid Moves :P
-    std::vector<Location*> occupiedLocations;
+std::vector<Connection*> Location::getOccupiedConnections() {
+    //returns vector with Connections
+    std::vector<Connection*> occupiedConnections;
 
-    //Adds moves as tuples to result vector
+    //
     for (int i = 0; i < m_neighbours.size(); i++) {
-        if (m_neighbours[i].location->isOccupied()) {
-            occupiedLocations.push_back(m_neighbours[i].location);
+        if (m_neighbours[i].location->isOccupied() && !(m_neighbours[i].location->getCurrentPlayer()->isMrX())) {
+            //Tiles with Mr.X on them will not be added to this.
+            occupiedConnections.push_back(&m_neighbours[i]);
         }
     }
-    return occupiedLocations;
+    return occupiedConnections;
+}
+
+std::string Location::getName() {
+    return m_name;
+}
+
+Player* Location::getCurrentPlayer() {
+    return m_currentPlayer;
 }
 
 //
