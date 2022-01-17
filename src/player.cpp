@@ -79,6 +79,8 @@ void Player::setMrX(){
 
 void Player::setLocation(Location* newLocation){
     //Pointer to new location set on player. Careful: Hast to be set on location itself aswell!
+
+    //TODO: implement Ticket usage
     
     //Keeping track of history, maybe it will be useful for visualization at some point
     if (!(m_currentLocation == nullptr))

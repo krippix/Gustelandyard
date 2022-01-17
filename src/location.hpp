@@ -38,6 +38,6 @@ class Location {
 
 		//setter
 		void setName(std::string name);
-		void setCurrentPlayer(const Player* currentPlayer);
+		void setCurrentPlayer(Player* currentPlayer);
 		void setStartingPosition();
 };

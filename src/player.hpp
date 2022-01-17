@@ -34,9 +34,5 @@ class Player{
         //setter
         void setName(std::string);
         void setMrX();
-        void setLocation(Location* newLocation);
-       
-        
-
-
+        void setLocation(Location* newLocation);    
 };

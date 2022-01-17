@@ -82,10 +82,13 @@ void Location::setName(std::string name) {
     m_name = name;
 }
 
-void Location::setCurrentPlayer(const Player* currentPlayer) {
+void Location::setCurrentPlayer(Player* currentPlayer) {
     //Adds pointer to player on this location
-    const Player* m_currentPlayer = currentPlayer;
-    m_currentPlayer->getName();
+    if (currentPlayer == nullptr) {
+        std::cout << "[ERROR]Something went very wrong here" << std::endl;
+    }
+    
+    Player* m_currentPlayer = currentPlayer;
 }
 
 void Location::setStartingPosition() {

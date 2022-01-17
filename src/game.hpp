@@ -31,5 +31,5 @@ class Game{
 
         //setter
         void setPlayerCount();
-        
+        void setLocation(Player* currentPlayer, Location* newLocation);
 };

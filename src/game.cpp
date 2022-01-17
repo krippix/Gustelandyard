@@ -59,7 +59,7 @@ void Game::assignStartPositions(){
 
         //Choose Random index and apply to player
         int chosenIndex = rand() % (startingLocations.size()-i); //Number of starting Positions minus current iteration (+1 because 
-        m_players[i].setLocation(startingLocations[chosenIndex]);
+        setLocation(&m_players[i], startingLocations[chosenIndex]);
 
 
         //Swap chosen index with last index (so it cant be chosen anymore because the sample size dereases by i)
@@ -80,7 +80,7 @@ void Game::movePlayer(Player* currentPlayer){
     //check if Mr.X has been trapped
     if (availableConnections.size() == 0 && currentPlayer->isMrX()) {
         std::cout << "Mr.X is trapped at " << currentPlayer->getLocation()->getName() << "the detectives have won!" << std::endl;
-        currentPlayer->setLocation(currentPlayer->getLocation());
+        setLocation(currentPlayer, currentPlayer->getLocation());
         m_gameover = true;
         return;
     }
@@ -114,7 +114,7 @@ void Game::movePlayer(Player* currentPlayer){
     std::vector<std::string> connectionTypeName{ "taxi","bus","train","boat" }; //sorry for that
     for (int i = 0; i < allowedMoves.size(); i++) {
         std::cout << i << ". ";
-        std::cout << "[" << connectionTypeName[i] << "]";
+        std::cout << "[" << connectionTypeName[allowedMoves[i]->connectionType] << "]";
         std::cout << "[" << allowedMoves[i]->location->getName() << "]" << std::endl;
     }
     
@@ -122,7 +122,7 @@ void Game::movePlayer(Player* currentPlayer){
     //First occupied places
     for (int i = 0; i < unavailableConnections.size(); i++) {
         std::cout << unavailableConnections.size()+i << ". ";
-        std::cout << "[" << connectionTypeName[i] << "]";
+        std::cout << "[" << connectionTypeName[unavailableConnections[i]->connectionType] << "]";
         std::cout << "[" << unavailableConnections[i]->location->getName() << "][blocked]";
         std::cout << "[" << unavailableConnections[i]->location->getCurrentPlayer()->getName() << "]" << std::endl;
     }
@@ -130,7 +130,7 @@ void Game::movePlayer(Player* currentPlayer){
     //Now those that are unreachable due to missing tickets
     for (int i = 0; i < disallowedMoves.size(); i++) {
         std::cout << disallowedMoves.size() + unavailableConnections.size() + i << ". ";
-        std::cout << "[" << connectionTypeName[i] << "]";
+        std::cout << "[" << connectionTypeName[disallowedMoves[i]->connectionType] << "]";
         std::cout << "[" << disallowedMoves[i]->location->getName() << "][no tickets]" << std::endl;
     }
 
@@ -140,7 +140,7 @@ void Game::movePlayer(Player* currentPlayer){
     //Check if player has been trapped
     if (allowedMoves.size() == 0) {
         std::cout << "No available Moves! You are stuck here!" << std::endl;
-        currentPlayer->setLocation(currentPlayer->getLocation()); //For History keeping
+        setLocation(currentPlayer,currentPlayer->getLocation()); //For History keeping
         return;
     }
 
@@ -162,7 +162,7 @@ void Game::movePlayer(Player* currentPlayer){
     }
     
     //Now everything should be fine? Please?
-    currentPlayer->setLocation(allowedMoves[selection]->location);
+    setLocation(currentPlayer, allowedMoves[selection]->location);
     return;
 }
 
@@ -211,21 +211,22 @@ void Game::nextTurn(){
         m_players[i].printTickets();
         movePlayer(&m_players[i]);
         std::cout << std::endl;
+    }  
+}
+
+void Game::setLocation(Player* currentPlayer, Location* newLocation) { //Needet, because location hast to be saved in Location AND in player object
+    //clear old location
+    currentPlayer->getLocation()->setCurrentPlayer(nullptr); //Makes old position empty!
+    
+    //Sets Location on Player object
+    newLocation->setCurrentPlayer(currentPlayer);
+
+    if (newLocation->getCurrentPlayer() == nullptr) {
+        std::cout << "THIS SHOULDNT HAPPEN D: WHAT IS GOING ON REEEEEEEEE" << std::endl;
     }
-
-
-        
-        /*
-        for (int i=1; i < m_players.size(); i++){
-            int playertmp;
-            playertmp = m_players[i].getPosition();
-
-            for (int j=0; i < availableEdges.size();  i++ )
-        }
-
-        movePlayer(m_players[i],newPosition);
-        }
-        */
-
+                                                                       
+    //Sets location on Location object
+    currentPlayer->setLocation(newLocation);
+    
     
 }
