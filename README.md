@@ -8,6 +8,7 @@ I will probably attempt to make a frontend for this at some point.
 - [x] Implement Players
 - [x] Implement Map
 - [x] Implement Locations
+- [ ] Implement Basic Game logic
 - [ ] Implement 2x Ticket (Including correct pathing history!) (Maybe as 0-turn)
 - [ ] Implement ticket usage (and the requirement)
 - [ ] Implement announcement of Mr.X position
