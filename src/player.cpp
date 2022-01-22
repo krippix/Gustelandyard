@@ -41,7 +41,7 @@ std::vector<int> Player::getTickets() {
 }
 
 void Player::printTickets() const {
-    std::cout << "Tickets: " << std::endl;
+    std::cout << "Tickets: ";
 
     if (m_isMrX) {
         std::cout << "[black]: " << m_tickets[3] << " [2xTurn]: " << m_tickets[4];

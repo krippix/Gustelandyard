@@ -39,9 +39,6 @@ void Map::parseMapData(){
             m_locations[locationsJ["edges"][i][j][1]].addNeighbour(i, &m_locations[locationsJ["edges"][i][j][0]]);
         }
     }
-
-        
-    
 }
 
 //

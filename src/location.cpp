@@ -44,9 +44,9 @@ std::vector<Connection*> Location::getAvailableConnections() {
     //returns vector with Connections
     std::vector<Connection*> availableConnections;
 
-    //Returns Pointer to the connection
+    //Returns Pointer to the connection, if not occupied or occupying player is Mr.X
     for (int i = 0; i < m_neighbours.size(); i++) {
-        if (!m_neighbours[i].location->isOccupied()) {
+        if (!m_neighbours[i].location->isOccupied() || m_neighbours[i].location->getCurrentPlayer()->isMrX()) {
             availableConnections.push_back(&m_neighbours[i]);
         }
     }
@@ -84,11 +84,8 @@ void Location::setName(std::string name) {
 
 void Location::setCurrentPlayer(Player* currentPlayer) {
     //Adds pointer to player on this location
-    if (currentPlayer == nullptr) {
-        std::cout << "[ERROR]Something went very wrong here" << std::endl;
-    }
-    
-    Player* m_currentPlayer = currentPlayer;
+    m_currentPlayer = currentPlayer;
+    //assert(currentPlayer != nullptr);
 }
 
 void Location::setStartingPosition() {

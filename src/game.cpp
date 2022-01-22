@@ -1,4 +1,6 @@
 #include "game.hpp"
+#include <random>
+#include <chrono>
 
 //
 //-----constructor-----
@@ -28,11 +30,15 @@ void Game::chooseMrX(){
     char answer_tmp;
     int answer_no;
 
+    std::default_random_engine engine(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count());
+
     //Determin if Mr.X should be random
     std::cout << "Do you want to determine Mr. X randomly? [y/n] ";
     std::cin >> answer_tmp;
     if (answer_tmp == 'y'){
-        answer_no = (rand() % m_players.size());
+        //Random wizardry, seriously fuck this
+        std::uniform_int_distribution<int> range(0, m_players.size() - 1);
+        answer_no = range(engine);
     } else {
         for (int i=0; i < m_players.size(); i++){
         std::cout << "[" << i << "] " << m_players[i].getName() << std::endl;
@@ -46,21 +52,27 @@ void Game::chooseMrX(){
     std::cout << m_players[answer_no].getName() << " is Mr.X." << std::endl; //Choosing who will be Mr.X
 
     //Make Mr.X Player no. 0
-    std::swap(m_players[m_players.size()-1], m_players[0]);
+    std::swap(m_players[answer_no], m_players[0]);
 }
 
 void Game::assignStartPositions(){
+    //Good luck using this again
+    std::default_random_engine engine(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count());
     
     //Determine starting Position
 
     //TODO: Fix rand() implementation, for some reason only 19 and 20 seem to get picket at the moment!
     std::vector<Location*> startingLocations = Game::m_currentMap.getStartingLocations();
+
     for (int i = 0; i < m_players.size(); i++){
-
+        
         //Choose Random index and apply to player
-        int chosenIndex = rand() % (startingLocations.size()-i); //Number of starting Positions minus current iteration (+1 because 
-        setLocation(&m_players[i], startingLocations[chosenIndex]);
+        //Number of starting Positions minus current iteration (+1 because 
+        std::uniform_int_distribution<int> range(0, startingLocations.size() - i - 1); 
 
+        int chosenIndex = range(engine);
+        setLocation(&m_players[i], startingLocations[chosenIndex]);
+        std::cout << ":thonk:" << chosenIndex << std::endl;
 
         //Swap chosen index with last index (so it cant be chosen anymore because the sample size dereases by i)
         std::swap(startingLocations[chosenIndex], startingLocations[startingLocations.size() -1 -i]);
@@ -208,16 +220,20 @@ void Game::nextTurn(){
     //Maybe somehow make it possible for players to take turns at the same time
     for (int i=0; i < m_players.size(); i++){
         std::cout << std::endl << "Player to move: " << m_players[i].getName() << std::endl;
+        std::cout << std::endl << "Current Location: " << m_players[i].getLocation()->getName() << std::endl;
         m_players[i].printTickets();
         movePlayer(&m_players[i]);
         std::cout << std::endl;
     }  
 }
 
-void Game::setLocation(Player* currentPlayer, Location* newLocation) { //Needet, because location hast to be saved in Location AND in player object
+void Game::setLocation(Player* currentPlayer, Location* newLocation) { //Needet, because location has to be saved in Location AND in player object
     //clear old location
-    currentPlayer->getLocation()->setCurrentPlayer(nullptr); //Makes old position empty!
     
+    if (!(currentPlayer->getLocation() == nullptr)){
+        currentPlayer->getLocation()->setCurrentPlayer(nullptr); //Makes old position empty!
+    }
+
     //Sets Location on Player object
     newLocation->setCurrentPlayer(currentPlayer);
 
