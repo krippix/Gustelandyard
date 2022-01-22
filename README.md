@@ -7,8 +7,10 @@ I will probably attempt to make a frontend for this at some point.
 ## ToDo list
 - [x] Implement Map
 - [x] Implement Players
+- [ ] Implement Dummy-Players (if less than 3 detectives)
 - [ ] Implement 2x Ticket (Including correct pathing history!) (Maybe as 0-turn)
 - [ ] Implement ticket usage (and the requirement)
+- [ ] Implement announcement of Mr.X position
 - [ ] Create backend API (Do you even call that an API?)
 - [ ] Create Frontend
 
