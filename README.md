@@ -14,7 +14,7 @@ I will probably attempt to make a frontend for this at some point.
 - [ ] Implement announcement of Mr.X position
 - [ ] Implement Dummy-Players (if less than 3 detectives)
 - [ ] Implement Multiple Map support
-- [ ] Maybe check input map for redundant vertices
+- [ ] Check input map for redundant vertices, or handle them at least
 - [ ] Create backend API (Do you even call that an API?)
 - [ ] Create Frontend
 
