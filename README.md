@@ -5,8 +5,9 @@ Currently only a command line Application (which doesent really make sense, as y
 I will probably attempt to make a frontend for this at some point.
 
 ## ToDo list
-- [x] Implement Map
 - [x] Implement Players
+- [x] Implement Map
+- [x] Implement Locations
 - [ ] Implement 2x Ticket (Including correct pathing history!) (Maybe as 0-turn)
 - [ ] Implement ticket usage (and the requirement)
 - [ ] Implement announcement of Mr.X position
