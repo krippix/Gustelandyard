@@ -21,7 +21,7 @@ class Player{
         
         //functions
         void create();
-        void useTicket();
+        void useTicket(int locationType);
         void addTickets(std::vector<int>);
         
         //getter

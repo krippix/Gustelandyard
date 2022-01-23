@@ -9,12 +9,12 @@ I will probably attempt to make a frontend for this at some point.
 - [x] Implement Map
 - [x] Implement Locations
 - [x] Implement Basic Game logic
-- [ ] Implement 2x Ticket (Including correct pathing history!) (Maybe as 0-turn)
-- [ ] Implement ticket usage (and the requirement)
+- [x] Implement ticket usage (and the requirement)
+- [ ] Add win-condition "no detective can move"
 - [ ] Implement announcement of Mr.X position
-- [ ] Implement Dummy-Players (if less than 3 detectives)
-- [ ] Implement Multiple Map support
+- [ ] Implement 2x Ticket (Including correct pathing history!) (Maybe as 0-turn)
 - [ ] Check input map for redundant vertices, or handle them at least
-- [ ] Create backend API (Do you even call that an API?)
-- [ ] Create Frontend
+- [ ] Implement Multiple Map support
+- [ ] Implement Dummy-Players (if less than 3 detectives)
 
+- [ ] Create Frontend

@@ -19,6 +19,10 @@ void Player::create(){
     setName(name_tmp);
 }
 
+void Player::useTicket(int locationType) {
+    m_tickets[locationType]--;
+}
+
 void Player::addTickets(std::vector<int> newTickets) { //Adds tickets duh
     for (int i = 0; i < newTickets.size();i++) {
         m_tickets[i] += newTickets[i];

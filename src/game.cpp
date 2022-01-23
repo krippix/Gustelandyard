@@ -174,6 +174,7 @@ void Game::movePlayer(Player* currentPlayer){
     }
     
     //Now everything should be fine? Please?
+    currentPlayer->useTicket(allowedMoves[selection]->connectionType);
     setLocation(currentPlayer, allowedMoves[selection]->location);
     return;
 }
@@ -227,7 +228,7 @@ void Game::nextTurn(){
     }  
 }
 
-void Game::setLocation(Player* currentPlayer, Location* newLocation) { //Needet, because location has to be saved in Location AND in player object
+void Game::setLocation(Player* currentPlayer, Location* newLocation) { //Needed, because location has to be saved in Location AND in player object
     //clear old location
     
     if (!(currentPlayer->getLocation() == nullptr)){
