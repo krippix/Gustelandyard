@@ -18,4 +18,4 @@ I am not yet sure whether it will be as a webapp or as an actual downloadable cl
 - [ ] Implement Multiple Map support
 - [ ] Implement Dummy-Players (if less than 3 detectives)
 
-- [ ] Create Frontend
+- [ ] Create Frontend (oof)
