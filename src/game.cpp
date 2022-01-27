@@ -26,6 +26,7 @@ void Game::addPlayer(){//Creates new Player Object and adds it to the vector
     m_players.push_back(player_tmp);
 }
 
+
 void Game::chooseMrX(){
     char answer_tmp;
     int answer_no;
@@ -55,6 +56,7 @@ void Game::chooseMrX(){
     std::swap(m_players[answer_no], m_players[0]);
 }
 
+
 void Game::assignStartPositions(){
     //Good luck using this again
     std::default_random_engine engine(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count());
@@ -72,18 +74,18 @@ void Game::assignStartPositions(){
 
         int chosenIndex = range(engine);
         setLocation(&m_players[i], startingLocations[chosenIndex]);
-        std::cout << ":thonk:" << chosenIndex << std::endl;
 
         //Swap chosen index with last index (so it cant be chosen anymore because the sample size dereases by i)
         std::swap(startingLocations[chosenIndex], startingLocations[startingLocations.size() -1 -i]);
     }
 }
 
+
 void Game::movePlayer(Player* currentPlayer){
     //Player movement, and most of the gameplay. Returns false, once somebody won.
     
     //"Input" Stuff
-    std::vector <Connection*> availableConnections = currentPlayer->getLocation()->getAvailableConnections();
+    std::vector <Connection*> availableConnections = currentPlayer->getLocation()->getEmptyConnections();
     std::vector <Connection*> unavailableConnections = currentPlayer->getLocation()->getOccupiedConnections();
     //Result Vector
     std::vector<Connection*> allowedMoves; //This vector will contain all possible connections
@@ -98,18 +100,33 @@ void Game::movePlayer(Player* currentPlayer){
     }
 
 
+    //Check if every player (who isn't Mr.X) is stuck
+    bool allDetectivesStuck = true;
+    for (int i = 1; i < m_players.size(); i++) {
+        if (!(m_players[i].isPermStuck())) {
+            allDetectivesStuck = false;
+        }
+    }
+    if (allDetectivesStuck) {
+        m_gameover = true;
+        std::cout << "The detectives cannot move: Mr. X has won the game!" << std::endl;
+        return;
+    }
+
+    //Print available Tickets
+    currentPlayer->printTickets();
+
+
     //Append to allowedMoves where Player has enough tickets
     //iterate through ticket types: 0->taxi, 1->bus, 2->train, 3->boat
     for (int i = 0; i <= 3; i++) {
-        
         //check each type for Ticket availability
         if (currentPlayer->getTickets()[i] != 0) {
             //push back all connections of the current type
             for (int j = 0; j < availableConnections.size(); j++) {
                 if (availableConnections[j]->connectionType == i) {
                     allowedMoves.push_back(availableConnections[j]);
-                }
-                                
+                }                  
             }       
         }
         else {
@@ -118,7 +135,6 @@ void Game::movePlayer(Player* currentPlayer){
                 if (availableConnections[j]->connectionType == i) {
                     disallowedMoves.push_back(availableConnections[j]);
                 }
-
             }
         }   
     }
@@ -179,12 +195,14 @@ void Game::movePlayer(Player* currentPlayer){
     return;
 }
 
+
 //
 //-----Getter-----
 //
 bool Game::getGameover(){
     return Game::m_gameover;
 }
+
 
 Player Game::getPlayer(int i){
     return Game::m_players[i];
@@ -205,6 +223,7 @@ void Game::setPlayerCount(){
     }
 }
 
+
 void Game::nextTurn(){
     m_currentTurn += 1;
 
@@ -222,11 +241,11 @@ void Game::nextTurn(){
     for (int i=0; i < m_players.size(); i++){
         std::cout << std::endl << "Player to move: " << m_players[i].getName() << std::endl;
         std::cout << std::endl << "Current Location: " << m_players[i].getLocation()->getName() << std::endl;
-        m_players[i].printTickets();
         movePlayer(&m_players[i]);
         std::cout << std::endl;
     }  
 }
+
 
 void Game::setLocation(Player* currentPlayer, Location* newLocation) { //Needed, because location has to be saved in Location AND in player object
     //clear old location
@@ -244,6 +263,4 @@ void Game::setLocation(Player* currentPlayer, Location* newLocation) { //Needed,
                                                                        
     //Sets location on Location object
     currentPlayer->setLocation(newLocation);
-    
-    
 }

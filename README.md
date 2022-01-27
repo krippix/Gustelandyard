@@ -1,8 +1,9 @@
 # Gustelandyard
 Attempting to Build the boardgame Scotland Yard in C++
-Currently only a command line Application (which doesent really make sense, as you would see the position of Mr.X
+After I manage to implement the game logic, I will think about how to create a frontend for it.
+Having it as a command-line game doesent really make sense, as the positions of Mr. X is easily visible this way.
 
-I will probably attempt to make a frontend for this at some point.
+I am not yet sure whether it will be as a webapp or as an actual downloadable client.
 
 ## ToDo list
 - [x] Implement Players

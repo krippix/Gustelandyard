@@ -17,7 +17,7 @@ class Location {
 	private:
 		int m_index;
 		std::string m_name;
-		std::vector<Connection> m_neighbours; //Contains Connection Structure 
+		std::vector<Connection> m_neighbours; //Contains Connection Structure
 		Player* m_currentPlayer = nullptr; //Player currently at the location
 		bool m_isStartingPosition = false;
 	public:
@@ -27,9 +27,9 @@ class Location {
 		//getter
 		bool isStartingPosition() const;
 		bool isOccupied() const; //Checks if player is at the location
-		std::vector<Connection*> getAllConnections();
-		std::vector<Connection*> getAvailableConnections();
-		std::vector<Connection*> getOccupiedConnections();
+		const std::vector<Connection*> getAllConnections();
+		const std::vector<Connection*> getEmptyConnections();
+		const std::vector<Connection*> getOccupiedConnections();
 		std::string getName();
 		Player* getCurrentPlayer();
 

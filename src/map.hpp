@@ -24,6 +24,7 @@ class Map{
 
         //getter
         std::vector<Location*> getStartingLocations();
+        //std::vector<Connection*> 
         
         //setter
         

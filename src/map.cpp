@@ -58,6 +58,9 @@ std::vector<Location*> Map::getStartingLocations() {
     return startingPositions;
 }
 
+
+
+
 //
 //-----setter-----
 //

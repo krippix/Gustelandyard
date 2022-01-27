@@ -33,15 +33,20 @@ bool Location::isOccupied() const {
     
 }
 
-/*
-std::vector<Connection>* Location::getAllConnections(){
-    //Returns Vector of neighbouring vertices
-    return &m_neighbours;
-}
-*/
 
-std::vector<Connection*> Location::getAvailableConnections() {
-    //returns vector with Connections
+const std::vector<Connection*> Location::getAllConnections(){
+    //Returns Vector of neighbouring vertices
+    std::vector<Connection*> allConnections;
+
+    for (int i = 0; i < m_neighbours.size(); i++) {
+        allConnections.push_back(&m_neighbours[i]);
+    }
+    return allConnections;
+}
+
+
+const std::vector<Connection*> Location::getEmptyConnections() {
+    //returns vector with Connections to neighbours
     std::vector<Connection*> availableConnections;
 
     //Returns Pointer to the connection, if not occupied or occupying player is Mr.X
@@ -53,7 +58,8 @@ std::vector<Connection*> Location::getAvailableConnections() {
     return availableConnections;
 }
 
-std::vector<Connection*> Location::getOccupiedConnections() {
+
+const std::vector<Connection*> Location::getOccupiedConnections() {
     //returns vector with Connections
     std::vector<Connection*> occupiedConnections;
 
@@ -67,13 +73,16 @@ std::vector<Connection*> Location::getOccupiedConnections() {
     return occupiedConnections;
 }
 
+
 std::string Location::getName() {
     return m_name;
 }
 
+
 Player* Location::getCurrentPlayer() {
     return m_currentPlayer;
 }
+
 
 //
 //-----setter-----
@@ -85,7 +94,6 @@ void Location::setName(std::string name) {
 void Location::setCurrentPlayer(Player* currentPlayer) {
     //Adds pointer to player on this location
     m_currentPlayer = currentPlayer;
-    //assert(currentPlayer != nullptr);
 }
 
 void Location::setStartingPosition() {
