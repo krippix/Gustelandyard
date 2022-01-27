@@ -11,7 +11,7 @@ I am not yet sure whether it will be as a webapp or as an actual downloadable cl
 - [x] Implement Locations
 - [x] Implement Basic Game logic
 - [x] Implement ticket usage (and the requirement)
-- [ ] Add win-condition "no detective can move"
+- [x] Add win-condition "no detective can move"
 - [ ] Implement announcement of Mr.X position
 - [ ] Implement 2x Ticket (Including correct pathing history!) (Maybe as 0-turn)
 - [ ] Check input map for redundant vertices, or handle them at least
