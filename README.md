@@ -12,9 +12,11 @@ I am not yet sure whether it will be as a webapp or as an actual downloadable cl
 - [x] Implement Basic Game logic
 - [x] Implement ticket usage (and the requirement)
 - [x] Add win-condition "no detective can move"
-- [ ] Implement announcement of Mr.X position
+- [x] Implement announcement of Mr.X position
 - [ ] Implement 2x Ticket (Including correct pathing history!) (Maybe as 0-turn)
 - [ ] Check input map for redundant vertices, or handle them at least
+- [ ] Prevent wrong inputs
+- [ ] Fix CLI selection list when unavailable spots are displayed
 - [ ] Implement Multiple Map support
 - [ ] Implement Dummy-Players (if less than 3 detectives)
 

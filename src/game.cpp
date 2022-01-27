@@ -108,8 +108,9 @@ void Game::movePlayer(Player* currentPlayer){
         }
     }
     if (allDetectivesStuck) {
-        m_gameover = true;
         std::cout << "The detectives cannot move: Mr. X has won the game!" << std::endl;
+        m_gameover = true;
+
         return;
     }
 
@@ -229,16 +230,30 @@ void Game::nextTurn(){
 
     std::cout << "#####################################" << std::endl;
 
-    if (m_currentTurn > 23){
-        m_gameover = true;
-        std::cout << "Turn 23 reached. "<< m_players[0].getName() <<" won!" << std::endl;
-        return;
+    //Announce Mr. X's position, win game based on turn.
+    switch (m_currentTurn) {
+        case 3:
+        case 8:
+        case 13:
+        case 18:
+            std::cout << "Turn " << m_currentTurn << " reached! Mr.X is currently in/at: " << m_players[0].getLocation()->getName() << std::endl;
+            break;
+        case 24:
+            std::cout << "Turn 24 reached! Mr. X escaped from " << m_players[0].getLocation()->getName() << std::endl;
+            m_gameover = true;
+            return;
+        default:
+            std::cout << "Turn " << m_currentTurn << " started!" << std::endl;
     }
-    std::cout << "Turn " << m_currentTurn << " started!" << std::endl;
 
     //Going through each players turn after another
     //Maybe somehow make it possible for players to take turns at the same time
     for (int i=0; i < m_players.size(); i++){
+        
+        if (m_gameover) {
+            return;
+        }
+        
         std::cout << std::endl << "Player to move: " << m_players[i].getName() << std::endl;
         std::cout << std::endl << "Current Location: " << m_players[i].getLocation()->getName() << std::endl;
         movePlayer(&m_players[i]);

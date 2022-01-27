@@ -4,14 +4,15 @@
 
 
 
-int main(){
-    
-    
+int main() {
+
+
     Game currentsession;
 
     //incease turns until game is set to gameover
-    do{
+    while (!currentsession.getGameover()) {
         currentsession.nextTurn();
-    } while(!currentsession.getGameover());
+    }
+        
 }
 
