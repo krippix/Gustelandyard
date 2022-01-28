@@ -3,6 +3,8 @@
 Map::Map(){
     parseMapData();
 }
+
+
 //
 //-----functions-----
 //
@@ -41,11 +43,10 @@ void Map::parseMapData(){
     }
 }
 
+
 //
 //-----Getter-----
 //
-
-
 std::vector<Location*> Map::getStartingLocations() {
     //Returns vector of pointers to possible starting locations
     std::vector<Location*> startingPositions;
@@ -57,8 +58,6 @@ std::vector<Location*> Map::getStartingLocations() {
     }
     return startingPositions;
 }
-
-
 
 
 //

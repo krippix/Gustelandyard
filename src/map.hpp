@@ -27,10 +27,4 @@ class Map{
         //std::vector<Connection*> 
         
         //setter
-        
-        
-       
-        
-
-
 };

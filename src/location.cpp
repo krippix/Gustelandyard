@@ -22,6 +22,7 @@ bool Location::isStartingPosition() const {
     return m_isStartingPosition;
 }
 
+
 bool Location::isOccupied() const {
     
     if (m_currentPlayer == nullptr) {
@@ -91,10 +92,12 @@ void Location::setName(std::string name) {
     m_name = name;
 }
 
+
 void Location::setCurrentPlayer(Player* currentPlayer) {
     //Adds pointer to player on this location
     m_currentPlayer = currentPlayer;
 }
+
 
 void Location::setStartingPosition() {
     m_isStartingPosition = true;

@@ -5,6 +5,7 @@
 
 #include "location.hpp"
 class Location;
+struct Connection;
 
 class Player{
     private:
@@ -33,7 +34,10 @@ class Player{
         void printTickets() const;
         bool isMrX();
         bool isPermStuck();
-        
+        void printMoves(Player* currentPlayer, std::vector<std::vector<Connection*>> allConnections);
+        bool isMrX_isTrapped();
+        std::vector<std::vector<Connection*>> getMoves();
+
         //setter
         void setName(std::string);
         void setMrX();

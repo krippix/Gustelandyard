@@ -28,6 +28,7 @@ class Game{
         //getter
         bool getGameover();
         Player getPlayer(int);
+        bool isEveryoneStuck();
 
         //setter
         void setPlayerCount();
