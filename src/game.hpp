@@ -24,6 +24,7 @@ class Game{
         void assignStartPositions();
         void nextTurn();
         void movePlayer(Player* currentPlayer);
+        void announceMrXposition();
 
         //getter
         bool getGameover();

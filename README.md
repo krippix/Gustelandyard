@@ -13,6 +13,7 @@ I am not yet sure whether it will be as a webapp or as an actual downloadable cl
 - [x] Implement ticket usage (and the requirement)
 - [x] Add win-condition "no detective can move"
 - [x] Implement announcement of Mr.X position
+- [ ] Tie Mr. X announcements to his turn instead of the game turn. (This is why 24 "turns" happen in the first place)
 - [ ] Implement 2x Ticket (Including correct pathing history!) (Maybe as 0-turn)
 - [ ] Check input map for redundant vertices, or handle them at least
 - [ ] Prevent wrong inputs

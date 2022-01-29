@@ -37,6 +37,7 @@ class Player{
         void printMoves(Player* currentPlayer, std::vector<std::vector<Connection*>> allConnections);
         bool isMrX_isTrapped();
         std::vector<std::vector<Connection*>> getMoves();
+        int Player::getHistorySize();
 
         //setter
         void setName(std::string);

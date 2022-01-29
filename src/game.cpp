@@ -88,20 +88,11 @@ void Game::nextTurn() {
 
     std::cout << "#####################################" << std::endl;
 
-    //Announce Mr. X's position, win game based on turn.
-    switch (m_currentTurn) {
-    case 3:
-    case 8:
-    case 13:
-    case 18:
-        std::cout << "Turn " << m_currentTurn << " reached! Mr.X is currently in/at: " << m_players[0].getLocation()->getName() << std::endl;
-        break;
-    case 24:
-        std::cout << "Turn 24 reached! Mr. X escaped from " << m_players[0].getLocation()->getName() << std::endl;
+    //End based on turn
+    if (m_currentTurn == 23) {
+        std::cout << "Turn 23 reached! Mr. X escaped from " << m_players[0].getLocation()->getName() << std::endl;
         m_gameover = true;
         return;
-    default:
-        std::cout << "Turn " << m_currentTurn << " started!" << std::endl;
     }
 
     //Check if Mr. X is trapped
@@ -117,6 +108,10 @@ void Game::nextTurn() {
         std::cout << "All detectives are stuck! Mr. X has won the game!" << std::endl;
         return;
     }
+
+    //Announce currentTurn
+    std::cout << "Turn: " << m_currentTurn << std::endl;
+
 
     //Going through each players turn after another
     //Maybe somehow make it possible for players to take turns at the same time
@@ -171,10 +166,37 @@ void Game::movePlayer(Player* currentPlayer){
         m_gameover = true;
     }
     
-    //Now everything should be fine? Please?
+    //Uses Ticket for the move
     currentPlayer->useTicket(allMoves[1][selection]->connectionType);
+    
     setLocation(currentPlayer, allMoves[1][selection]->location);
+    
+    
+    //Announce Mr.X if in key round
+    if (currentPlayer->isMrX()) {
+        announceMrXposition();
+    }
+    
+
     return;
+}
+
+
+void Game::announceMrXposition() {
+    //Announce Mr. X's position, win game based on turn.
+    int moveNr = m_players[0].getHistorySize();
+    
+    switch (moveNr) {
+    case 3:
+        std::cout << "Mr.X made his " << moveNr << "rd move, he is located at: " << m_players[0].getLocation()->getName() << std::endl;
+        break;
+    case 8:
+    case 13:
+    case 18:
+    case 24:
+        std::cout << "Mr.X made his " << moveNr << "th move, he is located at: " << m_players[0].getLocation()->getName() << std::endl;
+        break;
+    }
 }
 
 
@@ -226,11 +248,7 @@ void Game::setLocation(Player* currentPlayer, Location* newLocation) { //Needed,
 
     //Sets Location on Player object
     newLocation->setCurrentPlayer(currentPlayer);
-
-    if (newLocation->getCurrentPlayer() == nullptr) {
-        std::cout << "THIS SHOULDNT HAPPEN D: WHAT IS GOING ON REEEEEEEEE" << std::endl;
-    }
-                                                                       
+                                                                   
     //Sets location on Location object
     currentPlayer->setLocation(newLocation);
 }

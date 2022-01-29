@@ -198,6 +198,12 @@ std::vector<std::vector<Connection*>> Player::getMoves() {
 }
 
 
+int Player::getHistorySize() {
+    //Returns amount of moves made so far
+    return m_locationHistory.size();
+}
+
+
 //
 //-----Setter-----
 //
