@@ -127,6 +127,7 @@ void Player::printMoves(Player* currentPlayer, std::vector<std::vector<Connectio
     //Prints out allowed moves from current Position
     std::vector<std::string> connectionTypeName{ "taxi","bus","train","boat" }; //sorry for that
     for (int i = 0; i < allConnections[1].size(); i++) {
+        if (i < 10) std::cout << " "; //formatting
         std::cout << i << ". ";
         std::cout << "[" << connectionTypeName[allConnections[1][i]->connectionType] << "]";
         std::cout << "[" << allConnections[1][i]->location->getName() << "]" << std::endl;
@@ -204,6 +205,11 @@ int Player::getHistorySize() {
 }
 
 
+bool Player::getActiveDoubleMove() {
+    return m_activeDoubleMove;
+}
+
+
 //
 //-----Setter-----
 //
@@ -234,4 +240,9 @@ void Player::setLocation(Location* newLocation){
 void Player::setPermStuck() {
     //Sets the player as permanently stuck, meaning he will not be able to move for the rest of the game.
     m_isPermStuck = true;
+}
+
+
+void Player::setActiveDoubleMove(bool status) {
+    m_activeDoubleMove = status;
 }

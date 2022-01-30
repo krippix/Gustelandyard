@@ -17,6 +17,7 @@ class Player{
         std::vector<int> m_tickets {11,8,4,0,0}; //taxi,bus,bahn,black,doubleturn
         //0 - taxi, 1 -> bus, 2 -> train, 3 -> black, 4 -> double 
         std::vector<Location*> m_locationHistory;
+        bool m_activeDoubleMove; //True while Mr.X is using doubleMove
 
     public:
         //constructor
@@ -38,10 +39,12 @@ class Player{
         bool isMrX_isTrapped();
         std::vector<std::vector<Connection*>> getMoves();
         int Player::getHistorySize();
+        bool getActiveDoubleMove();
 
         //setter
         void setName(std::string);
         void setMrX();
         void setLocation(Location* newLocation);    
         void setPermStuck();
+        void setActiveDoubleMove(bool status);
 };

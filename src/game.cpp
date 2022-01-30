@@ -136,6 +136,11 @@ void Game::movePlayer(Player* currentPlayer){
     //Get all moves [0] Disallowed [1]allowed
     std::vector<std::vector<Connection*>> allMoves = currentPlayer->getMoves();
     
+    //Print Black Ticket
+    if (currentPlayer->getTickets()[3] != 0) {
+        std::cout << "-1. [2x Ticket]" << std::endl;
+    }
+    
     //Print out moves
     currentPlayer->printMoves(currentPlayer, allMoves);
 
@@ -149,13 +154,19 @@ void Game::movePlayer(Player* currentPlayer){
     //Player input
     std::cout << "Move to: ";
     int selection;
-    
-    do {
+   
+    bool validInput = false;
+
+    do {  
         std::cin >> selection;
-        if (selection < 0 || selection > allMoves[1].size()) {
-            std::cout << "Not a valid move, try again:";
+        if (selection > 0 && selection < allMoves[1].size() || ((currentPlayer->getTickets()[3] != 0) && selection == -1)) {
+            validInput = true;
         }
-    } while (selection < 0 || selection > allMoves[1].size());
+        else {
+            std::cout << "Invalid input, try again!" << std::endl;
+        }
+
+    } while (!validInput);
     
     //Now that selection was made, the actual movement can happen
     //But first we have to check if the player moved to Mr.X's location
