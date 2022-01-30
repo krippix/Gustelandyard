@@ -99,7 +99,6 @@ bool Player::isPermStuck() {
                 //Check if there is a player on this position, and if this player is stuck
                 if (connections[i]->location->isOccupied()) {
 
-
                     //if player on connection is not stuck 
                     if (!(connections[i]->location->getCurrentPlayer()->isPermStuck())) {
                         m_possiblyStuck = false;
@@ -135,6 +134,7 @@ void Player::printMoves(Player* currentPlayer, std::vector<std::vector<Connectio
 
     //Print out blocked/unavailable locations + Reason
     for (int i = 0; i < allConnections[0].size(); i++) {
+        if (i < 10) std::cout << " "; //formatting
         std::cout << allConnections[1].size() + i << ". ";
         std::cout << "[" << connectionTypeName[allConnections[1][i]->connectionType] << "]";
         
