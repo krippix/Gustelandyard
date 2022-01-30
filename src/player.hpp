@@ -17,7 +17,7 @@ class Player{
         std::vector<int> m_tickets {11,8,4,0,0}; //taxi,bus,bahn,black,doubleturn
         //0 - taxi, 1 -> bus, 2 -> train, 3 -> black, 4 -> double 
         std::vector<Location*> m_locationHistory;
-        bool m_activeDoubleMove; //True while Mr.X is using doubleMove
+        bool m_activeDoubleMove = false; //True while Mr.X is using doubleMove
 
     public:
         //constructor

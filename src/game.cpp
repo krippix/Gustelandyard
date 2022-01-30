@@ -158,15 +158,33 @@ void Game::movePlayer(Player* currentPlayer){
     bool validInput = false;
 
     do {  
+        std::cin.clear();
         std::cin >> selection;
-        if (selection > 0 && selection < allMoves[1].size() || ((currentPlayer->getTickets()[3] != 0) && selection == -1)) {
-            validInput = true;
+        if (selection >= 0 && selection < allMoves[1].size() || ((currentPlayer->getTickets()[3] != 0) && selection == -1)) {
+            if (currentPlayer->getActiveDoubleMove() && selection == -1) {
+                validInput = false;
+                std::cout << "You can only 2x move once per round!" << std::endl;
+                std::cout << "Try again: ";
+            }
+            else {
+                validInput = true;
+            }
         }
         else {
-            std::cout << "Invalid input, try again!" << std::endl;
+            std::cout << "Invalid input, try again: ";
         }
 
     } while (!validInput);
+    
+    
+    if (selection == -1) {
+        currentPlayer->setActiveDoubleMove(true);
+        movePlayer(currentPlayer);
+        movePlayer(currentPlayer);
+        currentPlayer->setActiveDoubleMove(false);
+        return;
+    }
+    
     
     //Now that selection was made, the actual movement can happen
     //But first we have to check if the player moved to Mr.X's location
@@ -187,8 +205,6 @@ void Game::movePlayer(Player* currentPlayer){
     if (currentPlayer->isMrX()) {
         announceMrXposition();
     }
-    
-
     return;
 }
 
