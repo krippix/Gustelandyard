@@ -9,7 +9,7 @@ using json = nlohmann::json;
 
 class Map{
     private:
-        std::string m_name = "Sigmaringen"; //Name of the Map, TODO: Make non-static
+        std::string m_name = "Test"; //Name of the Map, TODO: Make non-static
         std::vector<Location> m_locations;
         //0 startloc.,1 taxi, 2 bus, 3 train, 4 boat
         
