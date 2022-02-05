@@ -20,3 +20,9 @@ I am not yet sure whether it will be as a webapp or as an actual downloadable cl
 - [ ] Create Frontend (oof)
 
 - [ ] Implement Dummy-Players (if less than 3 detectives)
+
+# "Documentation"
+## Map importing
+The Maps in the game are planned to be folders, containing the visual implementation (of which I currently have no idea how to implement), and a json file describing the map as graph.
+
+There are four vehicle types, in the follwing order: taxi, bus, train, boat
