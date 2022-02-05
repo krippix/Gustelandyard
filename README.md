@@ -17,6 +17,7 @@ I am not yet sure whether it will be as a webapp or as an actual downloadable cl
 - [x] Implement 2x Ticket (Including correct pathing history!) (Maybe as 0-turn)
 - [x] Fix CLI selection list when unavailable spots are displayed
 - [ ] Implement multi-Map support
+- [ ] (maybe) add events to specific locations
 - [ ] Create Frontend (oof)
 
 - [ ] Implement Dummy-Players (if less than 3 detectives)
