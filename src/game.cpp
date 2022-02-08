@@ -18,7 +18,6 @@ Game::Game(){
 
 }
 
-
 //
 //-----functions-----
 //
@@ -27,7 +26,6 @@ void Game::addPlayer(){//Creates new Player Object and adds it to the vector
     Player player_tmp;
     m_players.push_back(player_tmp);
 }
-
 
 void Game::chooseMrX(){
     char answer_tmp;
@@ -58,7 +56,6 @@ void Game::chooseMrX(){
     std::swap(m_players[answer_no], m_players[0]);
 }
 
-
 void Game::assignStartPositions(){
     //Good luck using this again
     std::default_random_engine engine(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count());
@@ -81,7 +78,6 @@ void Game::assignStartPositions(){
         std::swap(startingLocations[chosenIndex], startingLocations[startingLocations.size() -1 -i]);
     }
 }
-
 
 void Game::nextTurn() {
     m_currentTurn += 1;
@@ -125,7 +121,6 @@ void Game::nextTurn() {
         std::cout << std::endl;
     }
 }
-
 
 void Game::movePlayer(Player* currentPlayer){
     //Player movement, and most of the gameplay. Returns false, once somebody won.
@@ -176,7 +171,6 @@ void Game::movePlayer(Player* currentPlayer){
 
     } while (!validInput);
     
-    
     if (selection == -1) {
         currentPlayer->setActiveDoubleMove(true);
         movePlayer(currentPlayer);
@@ -184,7 +178,6 @@ void Game::movePlayer(Player* currentPlayer){
         currentPlayer->setActiveDoubleMove(false);
         return;
     }
-    
     
     //Now that selection was made, the actual movement can happen
     //But first we have to check if the player moved to Mr.X's location
@@ -200,14 +193,12 @@ void Game::movePlayer(Player* currentPlayer){
     
     setLocation(currentPlayer, allMoves[1][selection]->location);
     
-    
     //Announce Mr.X if in key round
     if (currentPlayer->isMrX()) {
         announceMrXposition();
     }
     return;
 }
-
 
 void Game::announceMrXposition() {
     //Announce Mr. X's position, win game based on turn.
@@ -226,7 +217,6 @@ void Game::announceMrXposition() {
     }
 }
 
-
 //
 //-----Getter-----
 //
@@ -234,11 +224,9 @@ bool Game::getGameover(){
     return Game::m_gameover;
 }
 
-
 Player Game::getPlayer(int i){
     return Game::m_players[i];
 }
-
 
 bool Game::isEveryoneStuck() {
     //Check if every player (who isn't Mr.X) is stuck
@@ -249,7 +237,6 @@ bool Game::isEveryoneStuck() {
     }
     return true;
 }
-
 
 //
 //-----Setter-----
@@ -264,7 +251,6 @@ void Game::setPlayerCount(){
         Game::addPlayer();
     }
 }
-
 
 void Game::setLocation(Player* currentPlayer, Location* newLocation) { //Needed, because location has to be saved in Location AND in player object
     //clear old location

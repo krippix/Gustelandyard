@@ -4,7 +4,6 @@ Map::Map(){
     parseMapData();
 }
 
-
 //
 //-----functions-----
 //
@@ -43,7 +42,6 @@ void Map::parseMapData(){
     }
 }
 
-
 //
 //-----Getter-----
 //
@@ -58,7 +56,6 @@ std::vector<Location*> Map::getStartingLocations() {
     }
     return startingPositions;
 }
-
 
 //
 //-----setter-----

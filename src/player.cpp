@@ -7,7 +7,6 @@ Player::Player(){
     create();
 };
 
-
 //
 //-----functions-----
 //
@@ -20,18 +19,15 @@ void Player::create(){
     setName(name_tmp);
 }
 
-
 void Player::useTicket(int locationType) {
     m_tickets[locationType]--;
 }
-
 
 void Player::addTickets(std::vector<int> newTickets) { //Adds tickets duh
     for (int i = 0; i < newTickets.size();i++) {
         m_tickets[i] += newTickets[i];
     }
 }
-
 
 //
 //-----Getter-----
@@ -40,16 +36,13 @@ Location* Player::getLocation() const {
     return m_currentLocation;
 }
 
-
 std::string Player::getName() const {
     return Player::m_name;
 }
 
-
 std::vector<int> Player::getTickets() {
     return Player::m_tickets;
 }
-
 
 void Player::printTickets() const {
     std::cout << "Tickets: ";
@@ -63,7 +56,6 @@ void Player::printTickets() const {
     std::cout << std::endl;
 }
 
-
 bool Player::isMrX() {
     if (this == nullptr) {
         return false;
@@ -72,7 +64,6 @@ bool Player::isMrX() {
         return m_isMrX;
     }    
 }
-
 
 bool Player::isPermStuck() {
     //Checks a detective is not able to move anymore (even if a neighbouring player moves away)
@@ -120,7 +111,6 @@ bool Player::isPermStuck() {
     }
 }
 
-
 void Player::printMoves(Player* currentPlayer, std::vector<std::vector<Connection*>> allConnections) {
     
     //Prints out allowed moves from current Position
@@ -150,7 +140,6 @@ void Player::printMoves(Player* currentPlayer, std::vector<std::vector<Connectio
     }
 }
 
-
 bool Player::isMrX_isTrapped() {
     //Checks if Mr.X is trapped between Detectives
 
@@ -161,7 +150,6 @@ bool Player::isMrX_isTrapped() {
     }
     return false;
 }
-
 
 std::vector<std::vector<Connection*>> Player::getMoves() {
     //returns moves as 2D vector [0]Not allowed, [1]allowed
@@ -198,17 +186,14 @@ std::vector<std::vector<Connection*>> Player::getMoves() {
     return move_result;
 }
 
-
 int Player::getHistorySize() {
     //Returns amount of moves made so far
     return m_locationHistory.size();
 }
 
-
 bool Player::getActiveDoubleMove() {
     return m_activeDoubleMove;
 }
-
 
 //
 //-----Setter-----
@@ -218,14 +203,12 @@ void Player::setName(std::string newname){
     Player::m_name = newname;
 }
 
-
 void Player::setMrX(){
     //makes Player Mr. X
     Player::m_isMrX = true;
     std::vector<int> xTickets {39,42,46,5,2}; //adds Tickets for Mr.X
     addTickets(xTickets);
 }
-
 
 void Player::setLocation(Location* newLocation){
     //Pointer to new location set on player.   
@@ -236,12 +219,10 @@ void Player::setLocation(Location* newLocation){
     m_currentLocation = newLocation;
 }
 
-
 void Player::setPermStuck() {
     //Sets the player as permanently stuck, meaning he will not be able to move for the rest of the game.
     m_isPermStuck = true;
 }
-
 
 void Player::setActiveDoubleMove(bool status) {
     m_activeDoubleMove = status;

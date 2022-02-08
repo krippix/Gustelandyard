@@ -6,7 +6,6 @@ Location::Location(int id, std::string name) {
     setName(name);
 }
 
-
 //
 //-----functions-----
 //
@@ -14,14 +13,12 @@ void Location::addNeighbour(int type, Location* location) {
     m_neighbours.push_back({ type,location });
 }
 
-
 //
 //-----getter-----
 //
 bool Location::isStartingPosition() const {
     return m_isStartingPosition;
 }
-
 
 bool Location::isOccupied() const {
     
@@ -34,7 +31,6 @@ bool Location::isOccupied() const {
     
 }
 
-
 const std::vector<Connection*> Location::getAllConnections(){
     //Returns Vector of neighbouring vertices
     std::vector<Connection*> allConnections;
@@ -44,7 +40,6 @@ const std::vector<Connection*> Location::getAllConnections(){
     }
     return allConnections;
 }
-
 
 const std::vector<Connection*> Location::getEmptyConnections() {
     //returns vector with Connections to neighbours
@@ -58,7 +53,6 @@ const std::vector<Connection*> Location::getEmptyConnections() {
     }
     return availableConnections;
 }
-
 
 const std::vector<Connection*> Location::getOccupiedConnections() {
     //returns vector with Connections
@@ -74,16 +68,13 @@ const std::vector<Connection*> Location::getOccupiedConnections() {
     return occupiedConnections;
 }
 
-
 std::string Location::getName() {
     return m_name;
 }
 
-
 Player* Location::getCurrentPlayer() {
     return m_currentPlayer;
 }
-
 
 //
 //-----setter-----
@@ -92,12 +83,10 @@ void Location::setName(std::string name) {
     m_name = name;
 }
 
-
 void Location::setCurrentPlayer(Player* currentPlayer) {
     //Adds pointer to player on this location
     m_currentPlayer = currentPlayer;
 }
-
 
 void Location::setStartingPosition() {
     m_isStartingPosition = true;
