@@ -19,7 +19,7 @@ I am not yet sure whether it will be as a webapp or as an actual downloadable cl
 - [ ] Implement multi-Map support
 - [ ] (maybe) add events to specific locations
 - [ ] Create Frontend (oof)
-
+- [ ] Map visuals
 - [ ] Implement Dummy-Players (if less than 3 detectives)
 
 # "Documentation"
