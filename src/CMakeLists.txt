@@ -3,9 +3,9 @@ add_executable(gustelandyard
     main.cpp
     map.cpp
     player.cpp
-    game.cpp
+    "server.cpp"
     "location.cpp"
-)
+ "network.cpp" "network.hpp" "client.hpp" "client.cpp")
 
 # Tell gustelandyard where to find additional include files
 target_include_directories(gustelandyard PRIVATE

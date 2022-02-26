@@ -3,22 +3,22 @@
 //-----constructor-----
 //
 Player::Player(){
-    //String name
-    create();
-};
-
-//
-//-----functions-----
-//
-void Player::create(){
     //Creates Player int of curren no.
     std::string name_tmp;
 
     std::cout << "enter name: ";
     std::cin >> name_tmp;
     setName(name_tmp);
+};
+
+Player::Player(std::string name) {
+    //Creates new Player with provided object
+    setName(name);
 }
 
+//
+//-----functions-----
+//
 void Player::useTicket(int locationType) {
     m_tickets[locationType]--;
 }

@@ -1,12 +1,23 @@
-#include "game.hpp"
-#include <random>
-#include <chrono>
+#include "server.hpp"
 
 //
 //-----constructor-----
 //
-Game::Game(){
+
+
+//
+//-----functions-----
+//
+void Server::start() {
+    //incease turns until game is set to gameover
     
+    if (m_isHost) {
+        host();
+    }
+    else {
+        join();
+    }
+
     //Set Playercount
     setPlayerCount();
 
@@ -15,31 +26,41 @@ Game::Game(){
 
     //Determine and assign the starting Positions to the players
     assignStartPositions();
+}
+
+void Server::host() {
+    //Generate Game PIN, and display it
+    generatePin();
+
 
 }
 
-//
-//-----functions-----
-//
-void Game::addPlayer(){//Creates new Player Object and adds it to the vector
-    
-    Player player_tmp;
-    m_players.push_back(player_tmp);
+void Server::addPlayer(bool ownUser) {
+    //Creates new Player Object and adds it to the vector
+    //If the ownUser tag is set, it will create the user locally, otherwise it will wait for incoming connections
+
+    if (ownUser) {
+        Player player_tmp;
+        m_players.push_back(player_tmp);
+    }
+    else {
+        //handle incoming socket connections
+        //Player player_tmp(name);
+        //m_players.push_back();
+    }
 }
 
-void Game::chooseMrX(){
+void Server::chooseMrX(){
     char answer_tmp;
     int answer_no;
 
-    std::default_random_engine engine(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count());
-
-    //Determin if Mr.X should be random
+    //Determine if Mr.X should be random
     std::cout << "Do you want to determine Mr. X randomly? [y/n] ";
     std::cin >> answer_tmp;
     if (answer_tmp == 'y'){
-        //Random wizardry, seriously fuck this
-        std::uniform_int_distribution<int> range(0, m_players.size() - 1);
-        answer_no = range(engine);
+        //Random wizardry
+        answer_no = randomInteger(0, m_players.size() - 1);
+
     } else {
         for (int i=0; i < m_players.size(); i++){
         std::cout << "[" << i << "] " << m_players[i].getName() << std::endl;
@@ -56,14 +77,14 @@ void Game::chooseMrX(){
     std::swap(m_players[answer_no], m_players[0]);
 }
 
-void Game::assignStartPositions(){
+void Server::assignStartPositions(){
     //Good luck using this again
     std::default_random_engine engine(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count());
     
     //Determine starting Position
 
     //TODO: Fix rand() implementation, for some reason only 19 and 20 seem to get picket at the moment!
-    std::vector<Location*> startingLocations = Game::m_currentMap.getStartingLocations();
+    std::vector<Location*> startingLocations = Server::m_currentMap.getStartingLocations();
 
     for (int i = 0; i < m_players.size(); i++){
         
@@ -79,7 +100,7 @@ void Game::assignStartPositions(){
     }
 }
 
-void Game::nextTurn() {
+void Server::nextTurn() {
     m_currentTurn += 1;
 
     std::cout << "#####################################" << std::endl;
@@ -122,7 +143,7 @@ void Game::nextTurn() {
     }
 }
 
-void Game::movePlayer(Player* currentPlayer){
+void Server::movePlayer(Player* currentPlayer){
     //Player movement, and most of the gameplay. Returns false, once somebody won.
     
     //Print available Tickets
@@ -200,7 +221,7 @@ void Game::movePlayer(Player* currentPlayer){
     return;
 }
 
-void Game::announceMrXposition() {
+void Server::announceMrXposition() {
     //Announce Mr. X's position, win game based on turn.
     int moveNr = m_players[0].getHistorySize();
     
@@ -217,18 +238,34 @@ void Game::announceMrXposition() {
     }
 }
 
+int Server::randomInteger(int x, int y) {
+    //Generates random int between x and y
+
+    //Yes, nanoseconds.
+    std::default_random_engine engine(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count());
+    std::uniform_int_distribution<int> range(x,y);
+
+    return range(engine);
+}
+
+void Server::generatePin() {
+    //Generate Game PIN between 10000 and 99999
+    m_gamepin = randomInteger(10000, 99999);
+    std::cout << "Game PIN: " << m_gamepin << std::endl;
+}
+
 //
 //-----Getter-----
 //
-bool Game::getGameover(){
-    return Game::m_gameover;
+bool Server::getGameover(){
+    return Server::m_gameover;
 }
 
-Player Game::getPlayer(int i){
-    return Game::m_players[i];
+Player Server::getPlayer(int i){
+    return Server::m_players[i];
 }
 
-bool Game::isEveryoneStuck() {
+bool Server::isEveryoneStuck() {
     //Check if every player (who isn't Mr.X) is stuck
     for (int i = 1; i < m_players.size(); i++) {
         if (!(m_players[i].isPermStuck())) {
@@ -238,21 +275,29 @@ bool Game::isEveryoneStuck() {
     return true;
 }
 
+int Server::getGamePIN() {
+    return m_gamepin;
+}
+
 //
 //-----Setter-----
 //
-void Game::setPlayerCount(){
+void Server::setHosted() {
+    m_isHost = true;
+}
+
+void Server::setPlayerCount(){
     std::cout << "Enter playercount (2-6): ";
     //2 to 6 players
     int playercount;
     std::cin >> playercount;
 
     for(int i=0; i < playercount; i++){
-        Game::addPlayer();
+        Server::addPlayer();
     }
 }
 
-void Game::setLocation(Player* currentPlayer, Location* newLocation) { //Needed, because location has to be saved in Location AND in player object
+void Server::setLocation(Player* currentPlayer, Location* newLocation) { //Needed, because location has to be saved in Location AND in player object
     //clear old location
     
     if (!(currentPlayer->getLocation() == nullptr)){

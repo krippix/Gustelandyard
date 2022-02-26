@@ -8,23 +8,23 @@
 using json = nlohmann::json;
 
 class Map{
-    private:
-        std::string m_name = "Test"; //Name of the Map, TODO: Make non-static
-        std::vector<Location> m_locations;
-        //0 startloc.,1 taxi, 2 bus, 3 train, 4 boat
+private:
+    std::string m_name = "Test"; //Name of the Map, TODO: Make non-static
+    std::vector<Location> m_locations;
+    //0 startloc.,1 taxi, 2 bus, 3 train, 4 boat
         
-        //setter
+    //setter
 
-    public:
-        //constructor
-        Map();
+public:
+    //constructor
+    Map();
         
-        //functions
-        void parseMapData();
+    //functions
+    void parseMapData();
 
-        //getter
-        std::vector<Location*> getStartingLocations();
-        //std::vector<Connection*> 
+    //getter
+    std::vector<Location*> getStartingLocations();
+    //std::vector<Connection*> 
         
-        //setter
+    //setter
 };
