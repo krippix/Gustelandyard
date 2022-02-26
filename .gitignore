@@ -8,6 +8,7 @@
 .vscode/
 .vs/
 out/
+CMakeSettings.json
 
 anleitung.pdf
 # Distribution / packaging
@@ -32,6 +33,7 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+*.ink
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
