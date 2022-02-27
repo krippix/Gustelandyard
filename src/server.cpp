@@ -15,7 +15,7 @@ void Server::start() {
         host();
     }
     else {
-        join();
+        //join();
     }
 
     //Set Playercount
@@ -293,7 +293,7 @@ void Server::setPlayerCount(){
     std::cin >> playercount;
 
     for(int i=0; i < playercount; i++){
-        Server::addPlayer();
+        addPlayer(true);
     }
 }
 

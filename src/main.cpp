@@ -3,6 +3,7 @@
 #include "zmq.hpp"
 #include "player.hpp"
 #include "server.hpp"
+#include "client.hpp"
 #include "json.hpp"
 
 
@@ -41,13 +42,13 @@ int main() {
     
     if (host) {
         Server game;
+        game.start();
     }
     else {
-        Client game;
-        game.join();
+        //Client game;
+        //game.join();
+        //game.start();
     }
 
-    
-    game.start();
     
 }
