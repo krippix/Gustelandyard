@@ -8,47 +8,46 @@
 
 
 int main() {
-    
-    // initialization
-    zmq::context_t ctx{1};
-    
-    // constructs a reply socket and binds it
-    zmq::socket_t socket{ ctx, zmq::socket_type::rep };
-    socket.bind("tcp://*:5555");
 
-    // prepare static data for responses
-    const std::string data = "Coggers";
-    /*
-    while (true) {
-        zmq::message_t request;
+    std::cout << "   _____           _       _                 _                     _ " << std::endl;
+    std::cout << "  / ____|         | |     | |               | |                   | |" << std::endl;
+    std::cout << " | |  __ _   _ ___| |_ ___| | __ _ _ __   __| |_   _  __ _ _ __ __| |" << std::endl;
+    std::cout << " | | |_ | | | / __| __/ _ \\ |/ _` | '_ \\ / _` | | | |/ _` | '__/ _` |" << std::endl;
+    std::cout << " | |__| | |_| \\__ \\ ||  __/ | (_| | | | | (_| | |_| | (_| | | | (_| |" << std::endl;
+    std::cout << "  \\_____|\\__,_|___/\\__\\___|_|\\__,_|_| |_|\\__,_|\\__, |\\__,_|_|  \\__,_|" << std::endl;
+    std::cout << "                                                __/ |                " << std::endl;
+    std::cout << "                                               |___/                 " << std::endl << std::endl;
 
-        //recieve request from client
-        socket.recv(request, zmq::recv_flags::none);
-        std::cout << "Poggies: " << request.to_string() << std::endl;
+    //Decide wheather to host or join game
+    bool valid = true;
+    bool mode;
+    std::cout << "Do you want to host [0] or join [1] a game? ";
+    std::string input;
+    do {
+        std::cin >> input;
 
-        //sleep
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        if (input == "0") {
+            mode = 0;
+        }
+        else if (input == "1") {
+            mode = 1;
+        }
+        else {
+            valid = false;
+        }
+        if (!(input == "0") && !(input == "1")) {
+            std::cout << "Your input is invalid, please try again: ";
+        }
+    } while (!valid);
 
-        //send reply to client
-        socket.send(zmq::buffer(data), zmq::send_flags::none);
-    };
-    */
-
-
-    bool host;
-
-    std::cout << "Do you want to join [0] or host [1] a game? ";
-    std::cin >> host;
-    
-    if (host) {
+    //start session as host/client
+    if (mode == 0) {
         Server game;
         game.start();
     }
-    else {
-        //Client game;
-        //game.join();
-        //game.start();
-    }
 
-    
+    if (mode == 1) {
+        Client game;
+        game.join();
+    }
 }
