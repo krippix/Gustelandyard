@@ -42,8 +42,8 @@ int main() {
 
     //start session as host/client
     if (mode == 0) {
-        Server game;
-        game.start();
+        Server server;
+        server.startSession();
     }
 
     if (mode == 1) {

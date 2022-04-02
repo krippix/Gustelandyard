@@ -11,7 +11,6 @@ private:
     //variables
     std::vector<Player> m_players; //Vector with player objects
     Map m_currentMap;
-    int m_gamepin;
     int m_currentTurn = 0;
     bool m_gameover = false;
     bool m_isHost = false;
@@ -21,28 +20,28 @@ private:
 
 
 public:
-    //constructor
+    // ---- constructor ----
 
-    //functions
-    void start();
-    void host();
-    void join();
-    void addPlayer(bool ownUser);
+    // ---- functions ----
+    void prepare();
+
+    // creates player object and adds it into m_players
+    void addPlayer(std::string name);
+    
+    // calls addPlayer but asks for local userinput
+    void addPlayerHost();
     void assignStartPositions();
     void nextTurn();
     void movePlayer(Player* currentPlayer);
     void announceMrXposition();
-    int randomInteger(int x, int y);
-    void generatePin();
+    static int randomInteger(int x, int y);
 
-    //getter
+    // ---- getter ----
     bool getGameover();
     Player getPlayer(int);
     bool isEveryoneStuck();
-    int getGamePIN();
 
-    //setter
+    // ---- setter ----
     void setHosted();
-    void setPlayerCount();
     void setLocation(Player* currentPlayer, Location* newLocation);
 };

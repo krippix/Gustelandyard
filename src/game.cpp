@@ -6,20 +6,9 @@
 
 
 //
-//-----functions-----
+// ---- functions ----
 //
-void Game::start() {
-    //incease turns until game is set to gameover
-
-    if (m_isHost) {
-        host();
-    }
-    else {
-        //join();
-    }
-
-    //Set Playercount
-    setPlayerCount();
+void Game::prepare() {
 
     //choosing Mr.X and make him players[0] for turn order
     chooseMrX();
@@ -28,26 +17,22 @@ void Game::start() {
     assignStartPositions();
 }
 
-void Game::host() {
-    //Generate Game PIN, and display it
-    generatePin();
-
-
+void Game::addPlayer(std::string name) {
+    Player player_tmp;
+    m_players.push_back(player_tmp);
 }
 
-void Game::addPlayer(bool ownUser) {
-    //Creates new Player Object and adds it to the vector
-    //If the ownUser tag is set, it will create the user locally, otherwise it will wait for incoming connections
+void Game::addPlayerHost() {
+    std::string name_tmp = "";
 
-    if (ownUser) {
-        Player player_tmp;
-        m_players.push_back(player_tmp);
-    }
-    else {
-        //handle incoming socket connections
-        //Player player_tmp(name);
-        //m_players.push_back();
-    }
+    // adds player as long as string is not empty
+    do {
+        std::cin >> name_tmp;
+        if (name_tmp != "") {
+            addPlayer(name_tmp);
+            return;
+        }
+    } while (true);
 }
 
 void Game::chooseMrX() {
@@ -249,12 +234,6 @@ int Game::randomInteger(int x, int y) {
     return range(engine);
 }
 
-void Game::generatePin() {
-    //Generate Game PIN between 10000 and 99999
-    m_gamepin = randomInteger(10000, 99999);
-    std::cout << "Game PIN: " << m_gamepin << std::endl;
-}
-
 //
 //-----Getter-----
 //
@@ -276,10 +255,6 @@ bool Game::isEveryoneStuck() {
     return true;
 }
 
-int Game::getGamePIN() {
-    return m_gamepin;
-}
-
 //
 //-----Setter-----
 //
@@ -287,16 +262,6 @@ void Game::setHosted() {
     m_isHost = true;
 }
 
-void Game::setPlayerCount() {
-    std::cout << "Enter playercount (2-6): ";
-    //2 to 6 players
-    int playercount;
-    std::cin >> playercount;
-
-    for (int i = 0; i < playercount; i++) {
-        addPlayer(true);
-    }
-}
 
 void Game::setLocation(Player* currentPlayer, Location* newLocation) { //Needed, because location has to be saved in Location AND in player object
     //clear old location

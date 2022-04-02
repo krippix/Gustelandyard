@@ -2,13 +2,8 @@
 //
 //-----constructor-----
 //
-Player::Player(){
-    //Creates Player int of curren no.
-    std::string name_tmp;
-
-    std::cout << "enter name: ";
-    std::cin >> name_tmp;
-    setName(name_tmp);
+Player::Player(std::string name){
+    setName(name);
 };
 
 Player::Player(std::string name) {
