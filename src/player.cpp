@@ -2,10 +2,6 @@
 //
 //-----constructor-----
 //
-Player::Player(std::string name){
-    setName(name);
-};
-
 Player::Player(std::string name) {
     //Creates new Player with provided object
     setName(name);

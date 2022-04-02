@@ -9,20 +9,35 @@ struct Connection;
 
 class Player{
 private:
-    Location* m_currentLocation = nullptr;
-    bool m_isMrX = false;
-    bool m_isPermStuck = false; //true once player cant move with their tickets
-    bool m_possiblyStuck = false; //Used to determine if neighbour is stuck
-    bool m_isOnline = false;
+    // Player ID to for online usage
+    std::string m_onlineId; 
+
+    // Player name
     std::string m_name;
-    std::vector<int> m_tickets {11,8,4,0,0}; //taxi,bus,bahn,black,doubleturn
-    //0 - taxi, 1 -> bus, 2 -> train, 3 -> black, 4 -> double 
+
+    // location object containing current location (:P)
+    Location* m_currentLocation = nullptr;
+
+    // Player tickets: cab, bus, train, black, doubleturn
+    std::vector<int> m_tickets{ 11,8,4,0,0 };
+
+    // history of turns to allow "replay" at the end
     std::vector<Location*> m_locationHistory;
-    bool m_activeDoubleMove = false; //True while Mr.X is using doubleMove
+    
+    // wheather player is mr.x
+    bool m_isMrX = false;
+
+    // sets player as permanently stuck - can no longer move
+    bool m_isPermStuck = false;
+
+    // marks player as possibly stuck in order to check from another perspective
+    bool m_possiblyStuck = false; //Used to determine if neighbour is stuck
+    
+    //True while Mr.X is using 2x Ticket
+    bool m_activeDoubleMove = false; 
 
 public:
-    //constructor
-    Player();
+    // ---- constructor ----
     Player(std::string name);
         
     //functions
@@ -30,6 +45,7 @@ public:
     void addTickets(std::vector<int>);
         
     //getter
+    std::string getOnlineId();
     Location* getLocation() const;
     std::string getName() const;
     std::vector<int> getTickets();

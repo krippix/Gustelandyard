@@ -6,8 +6,8 @@ add_executable(gustelandyard
     "server.cpp"
     "server.hpp"
     "location.cpp"
-    "network.cpp"
-    "network.hpp"
+    
+    
     "client.hpp"
     "client.cpp" "game.cpp" "game.hpp")
 
